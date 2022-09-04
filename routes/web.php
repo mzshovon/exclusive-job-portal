@@ -98,6 +98,12 @@ Route::group(['middleware'=>['auth']],function () {
     Route::any('/exam/update/{id}', 'Admin\ExamController@update')->name('exam-update');
     Route::post('/exam/status/change', 'Admin\ExamController@change_status')->name('exam-status-change');
 
+    // --------------- Video routes ---------------------- //
+    Route::get('/video/view', 'Admin\VideoController@view')->name('video-view');
+    Route::any('/video/create', 'Admin\VideoController@store')->name('video-create');
+    Route::any('/video/update/{id}', 'Admin\VideoController@update')->name('video-update');
+    Route::post('/video/status/change', 'Admin\VideoController@change_status')->name('video-status-change');
+
     // --------------- Excel export/import routes ---------------------- //
     Route::get('/excel/export/{name}/{id}', 'Admin\ExcelController@export_question_answer_excel')->name('excel-question-answer-export');
     Route::get('/excel/export/subject', 'Admin\ExcelController@export_subject_excel')->name('excel-subject-export');

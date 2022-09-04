@@ -1,5 +1,5 @@
 <table>
-    <thead>
+    {{-- <thead>
     <tr>
         <th>Name</th>
         <th>Description</th>
@@ -15,23 +15,19 @@
         <th>Created At</th>
         <th>Updated At</th>
     </tr>
-    </thead>
+    </thead> --}}
     <tbody>
+        @foreach ($data->questions as $question)
         <tr>
-            <td>{{ $data->title }}</td>
-            <td>{{ $data->description }}</td>
-            <td>{{ $data->status == 1 ? 'Active':'Not Active' }}</td>
-            <td>{{ $data->questions->first()->type == 1 ? 'Mcq':'Written' }}</td>
-            @foreach ($data->questions as $question)
-                <td>{{$question->name}}</td>
-                @foreach ($question->answers as $answer)
-                    <td>{!! $answer->name !!}</td>
-                    <td>{{$answer->is_answer == 1? 'Yes':'No'}}</td>
-                @endforeach
+            <td>{{$question->name}}</td>
+            @foreach ($question->answers as $answer)
+                <td>{!! $answer->name !!}</td>
+                @if ($answer->is_answer == 1)
+                    <td>yes</td>
+                @endif
             @endforeach
-            <td>{{ Carbon\Carbon::parse($data->updated_at)->format("d-m-Y") }}</td>
-            <td>{{ Carbon\Carbon::parse($data->created_at)->format("d-m-Y") }}</td>
-            <td>{{ Carbon\Carbon::parse($data->updated_at)->format("d-m-Y") }}</td>
         </tr>
+        @endforeach
     </tbody>
 </table>
+

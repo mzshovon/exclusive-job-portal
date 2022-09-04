@@ -2,28 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class PushNotification extends Model
 {
     // Insert the current user data while saving date
-    public static function boot()
-    {
-        parent::boot();
-        static::creating(function($model)
-        {
-            $userid = (!Auth::guest()) ? Auth::user()->id : null ;
-            $model->created_by = $userid;
-            $model->updated_by = $userid;
-        });
-
-        static::updating(function($model)
-        {
-            $userid = (!Auth::guest()) ? Auth::user()->id : null ;
-            $model->updated_by = $userid;
-        });
-    }
+    use HasUser;
     public function users() {
         return $this->belongsToMany('App\Models\User');
     }

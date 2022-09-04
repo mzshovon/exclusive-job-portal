@@ -197,6 +197,12 @@
                   <p>About</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('video-view')}}"  class="nav-link">
+                  <i class="fas fa-video nav-icon"></i>
+                  <p>Video</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
