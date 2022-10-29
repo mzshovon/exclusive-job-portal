@@ -4,61 +4,49 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Subject;
 use App\Models\Video;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 class VideoController extends Controller
 {
-    // View the model info
+    // View the video info
     public function view()
     {
         $data = array();
         $data['title'] = 'videos';
         $data['videos'] = Video::all();
-        return view('panel.model.view',$data);
+        return view('panel.video.view',$data);
     }
-    // Store the model info
+    // Store the video info
     public function store(Request $request)
     {
         if ($request->isMethod('post')) {
             $request->validate([
                 'status'=>'required|in:0,1',
                 'title'=>'required|max:255',
-                'color'=>'required',
-                'icon'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:500',
-                'subject.*'=>'required',
+                'link'=>'required|max:255',
             ]);
             $message = array();
-            $model = new Video();
-            $model->title = $request->title ? $request->title : null;
-            $model->description = $request->description ? $request->description : null;
-            $model->status = $request->status;
-            $model->color = $request->color;
-            // dd($model);
-            if($request->hasFile('icon')) {
-                $file = $request->file('icon');
-                $file_name = time().'.'.$file->getClientOriginalExtension();
-                $destination_path = 'public/dist/img/model/'.$model->id.'/';
-                $file->move($destination_path,$file_name);
-                $model->icon = $destination_path.$file_name;
-            }
-            if($model->save()) {
-                $model->subjects()->attach($request->subject);
+            $video = new Video();
+            $video->title = $request->title ? $request->title : null;
+            $video->description = $request->description ? $request->description : null;
+            $video->status = $request->status;
+            $video->link = $request->link;
+            $video->other = $request->other;
+            if($video->save()) {
                 $message['alert'] = 'success';
-                $message['alert_message'] = 'model created successfully!';
-                return redirect('model/create')->with('message',$message);
+                $message['alert_message'] = 'video created successfully!';
+                return redirect('video/create')->with('message',$message);
             } else {
                 $message['alert'] = 'danger';
                 $message['alert_message'] = 'Something went wrong. Please contact with admin!';
-                return redirect('model/create')->with('message', $message);
+                return redirect('video/create')->with('message', $message);
             }
         } elseif ($request->isMethod('get')) {
             $data = array();
-            $data['title'] = 'Create model';
-            $data['subjects'] = Subject::get();
-            return view('panel.model.add',$data);
+            $data['title'] = 'Create video';
+            return view('panel.video.add',$data);
         }
     }
     public function update($id,Request $request)
@@ -67,28 +55,18 @@ class VideoController extends Controller
             $request->validate([
                 'status'=>'required|in:0,1',
                 'title'=>'required|max:255',
-                'color'=>'required',
-                'subject.*'=>'required',
-                // 'icon'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:500'
+                'link'=>'required|max:255',
             ]);
             $message = array();
-            $model = Video::find($id);
-            $model->title = $request->title ? $request->title : null;
-            $model->description = $request->description ? $request->description : null;
-            $model->status = $request->status;
-            $model->color = $request->color;
-            // dd($model);
-            if($request->hasFile('icon')) {
-                $file = $request->file('icon');
-                $file_name = time().'.'.$file->getClientOriginalExtension();
-                $destination_path = 'public/dist/img/model/'.$model->id.'/';
-                $file->move($destination_path,$file_name);
-                $model->icon = $destination_path.$file_name;
-            }
-            if($model->save()) {
-                $model->subjects()->sync($request->subject);
+            $video = Video::find($id);
+            $video->title = $request->title ? $request->title : null;
+            $video->description = $request->description ? $request->description : null;
+            $video->status = $request->status;
+            $video->link = $request->link;
+            $video->other = $request->other;
+            if($video->save()) {
                 $message['alert'] = 'success';
-                $message['alert_message'] = 'model updated successfully!';
+                $message['alert_message'] = 'video updated successfully!';
                 return redirect()->back()->with('message',$message);
             } else {
                 $message['alert'] = 'danger';
@@ -97,15 +75,9 @@ class VideoController extends Controller
             }
         } elseif ($request->isMethod('get')) {
             $data = array();
-            $videos = Video::with('subjects')->find($id);
-            $data['subject_list'] = [];
-            foreach ($videos->subjects as $key=>$subject) {
-                array_push($data['subject_list'] ,$subject->id);
-            }
-            $data['model']  = $videos;
-            $data['title'] = 'Update model';
-            $data['subjects'] = Subject::get();
-            return view('panel.model.edit',$data);
+            $data['video']  = Video::find($id);
+            $data['title'] = 'Update video';
+            return view('panel.video.edit',$data);
         }
     }
     public function delete(Request $request)
@@ -113,7 +85,7 @@ class VideoController extends Controller
         # code...
     }
     public function change_status(Request $request) {
-        // if (!auth()->user()->isAbleTo('model-delete')) {
+        // if (!auth()->user()->isAbleTo('video-delete')) {
         //     return redirect()->route('unauthorized');
         // }
         if($request->ajax()){
@@ -123,8 +95,8 @@ class VideoController extends Controller
             $status->status = $status->status == 1 ? 0 : 1;
             if($status->save()){
                 $message['alert'] = 'success';
-                $message['alert_message'] = 'model status changed successfully!';
-                $message['model_status'] = $status->status == 1 ? 0 : 1;
+                $message['alert_message'] = 'video status changed successfully!';
+                $message['video_status'] = $status->status == 1 ? 0 : 1;
                 $status_code = 200;
             } else {
                 $message['alert'] = 'danger';

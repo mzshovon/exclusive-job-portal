@@ -100,7 +100,7 @@
                             Delete
                         </button>
                     </td>
-                </tr> 
+                </tr>
                 @empty
                 <tr class="text-center">
                     No Data available!
@@ -122,7 +122,7 @@
     $("#dataTable").DataTable({
       "responsive": true,
       "autoWidth": false,
-     
+
     });
   });
   function deleteRole(id) {

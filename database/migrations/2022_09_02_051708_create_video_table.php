@@ -13,8 +13,12 @@ class CreateVideoTable extends Migration
      */
     public function up()
     {
-        Schema::create('video', function (Blueprint $table) {
-            $table->id();
+        Schema::create('videos', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('link')->nullable(false);
+            $table->string('other')->nullable();
+            $table->foreignId("created_by")->constrained("users")->onDelete("cascade");
+            $table->foreignId("updated_by")->constrained("users")->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateVideoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('video');
+        Schema::dropIfExists('videos');
     }
 }

@@ -39,28 +39,22 @@
                     <th style="width: 1%">
                       #
                     </th>
-                    <th style="width: 20%">
+                    <th>
+                      Video Link
+                    </th>
+                    <th>
                       Title
                     </th>
-                    <th style="width: 30%">
+                    <th>
                       Description
                     </th>
                     <th>
-                      Image
-                    </th>
-                    <th style="width: 20%" class="text-center">
-                      Image Position
-                    </th>
-                    <th style="width: 20%" class="text-center">
-                      Image Type
-                    </th>
-                    <th style="width: 8%">
                       Active Status
                     </th>
-                    <th style="width: 8%">
+                    <th>
                       Created At
                     </th>
-                    <th style="width: 20%">
+                    <th>
                       Actions
                     </th>
                 </tr>
@@ -69,66 +63,43 @@
               @php
                   $i=1;
               @endphp
-                @forelse ($videos as $videos)
+                @forelse ($videos as $video)
                 <tr data-id={{$video->id}}>
                     <td>
                         {{$i++}}
                     </td>
-                    {{-- <td>
-                        {{$video->title_en}}
-                    </td> --}}
                     <td>
-                        {!! $video->title_bn !!}
-                    </td>
-                    {{-- <td>
-                        {!! $video->description_en !!}
-                    </td> --}}
-                    <td>
-                        {!! $video->description_bn !!}
+                        {!! $video->link !!}
                     </td>
                     <td>
-                        <img src="{{asset($video->image_path)}}" class="gallery_image_boxed">
+                        {!! $video->title !!}
                     </td>
                     <td>
-                      @if ($video->image_position == 1)
-                        <span class="badge badge-success badge-sm">Top</span>
-                      @elseif($video->image_position == 2)
-                        <span class="badge badge-info badge-sm">Middle</span>
-                      @else
-                        <span class="badge badge-info badge-sm">Bottom</span>
-                      @endif
+                        {!! $video->description !!}
                     </td>
                     <td>
-                      @if ($video->type == 1)
-                        <span class="badge badge-success badge-sm">video Us</span>
-                      @elseif($video->type == 2)
-                        <span class="badge badge-info badge-sm">video Exam</span>
-                      @else
-                        <span class="badge badge-info badge-sm">video Rule</span>
-                      @endif
-                    </td>
-                    <td class="project-state">
-                        @if ($video->is_active == 1)
+                        @if ($video->status == 1)
                           <span class="badge badge-success badge-sm">Active</span>
                         @else
                           <span class="badge badge-danger badge-sm">InActive</span>
                         @endif
                     </td>
-                    <td class="project-state">
+                    <td>
                         {{$video->created_at}}
                     </td>
                     <td class="project-actions text-right">
+                        <span class="action_btn-{{$video->id}}">
+                            <button class="btn btn-{{$video->status == 1 ? 'warning' : 'success'}} btn-sm" onclick ="changeStatus({{$video->id}})" >
+                              <i class="fas fa-{{$video->status == 1 ? 'ban' : 'check-square'}}">
+                              </i>
+                              {{$video->status == 1 ? 'Deactivate' : 'Activate'}}
+                            </button>
+                          </span>
                         <a class="btn btn-info btn-sm" href="{{route('video-update',['id'=>$video->id])}}">
                             <i class="fas fa-pencil-alt">
                             </i>
                             Edit
                         </a>
-                        {{-- </a>href="{{route('role-delete',['id'=>$user->id])}}" --}}
-                        <button class="btn btn-danger btn-sm" onclick ="deleteRole({{$video->id}})" >
-                            <i class="fas fa-trash">
-                            </i>
-                            Delete
-                        </button>
                     </td>
                 </tr>
                 @empty
@@ -156,7 +127,7 @@
 
     });
   });
-  function deleteRole(id) {
+  function changeStatus(id) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -164,20 +135,30 @@
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, change it!'
     }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
-          url: "{{route('video-delete',['id'=>"+id+"])}}",
+          url: "{{route('video-status-change',['id'=>"+id+"])}}",
           method: "POST",
           data: {'id': id, _token: '{{csrf_token()}}', 'page': '{{app('request')->page}}'},
           dataType: "json",
           success: function (data,statusMessage,status) {
-            $('tr[data-id='+id+']').remove();
+              console.log('test');
+              video_status = data.video_status == 1 ? 'deactivated': 'activated';
+              if (video_status == 'deactivated') {
+                $('tr[data-id='+id+'] td:nth-child(5)').html('<span class="badge badge-danger badge-sm">InActive</span>');
+                $('.action_btn-'+id).html(`<button class="btn btn-success btn-sm" onclick ="changeStatus(${id})">
+                  <i class="fas fa-check-square"></i> Activate</button>`);
+              } else {
+                $('tr[data-id='+id+'] td:nth-child(5)').html('<span class="badge badge-success badge-sm">Active</span>');
+                $('.action_btn-'+id).html(`<button class="btn btn-warning btn-sm" onclick ="changeStatus(${id})">
+                  <i class="fas fa-ban"></i> Deactivate</button>`);
+              }
               if(status.status==200){
                 Swal.fire(
-                  'Deleted!',
-                  'Your selected video section has been deleted.',
+                  'Status Changed!',
+                  'Your selected subject has been '+subject_status+'.',
                   'success'
                   )
               };

@@ -22,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserCreated::class => [
             SuperadminAboutUserCreation::class
+        ],
+        LogEvent::class => [
+            LogEventListener::class
         ]
     ];
 
