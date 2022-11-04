@@ -30,10 +30,10 @@ class ImportQuestionAnswerExcel implements ToCollection
         $upload->questions()->attach($question->id);
         if($question->id) {
             for ($i=1; $i< $row->count(); $i++) {
-                if($row[$i] && $row[$i] != "is answer") {
+                if($row[$i] && $row[$i] != "yes") {
                     $answer = new Answer();
                     $answer->name = $row[$i];
-                    $answer->is_answer = ($i+1) < $row->count() && $row[$i+1] == "is answer" ? 1: 0;
+                    $answer->is_answer = ($i+1) < $row->count() && $row[$i+1] == "yes" ? 1: 0;
                     $answer->description = null;
                     $answer->save();
                     $question->answers()->attach($answer->id);

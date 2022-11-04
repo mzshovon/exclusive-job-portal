@@ -73,7 +73,7 @@ class UserController extends Controller
                             $message['alert'] = 'success';
                             $message['alert_message'] = 'User created successfully!';
                             return redirect('user/create')->with('message',$message);
-                        } 
+                        }
                     } else if(empty($permissions)) {
                         if($user->attachRole($role)) {
                             $message['alert'] = 'success';
@@ -134,7 +134,7 @@ class UserController extends Controller
                             $message['alert'] = 'success';
                             $message['alert_message'] = 'User updated successfully!';
                             return redirect()->back()->with('message',$message);
-                        } 
+                        }
                     } else if(empty($permissions)) {
                         if($user->roles()->sync($role)) {
                             $message['alert'] = 'success';
@@ -173,7 +173,7 @@ class UserController extends Controller
             $data['permissions_user'] = $permissions_user;
             return view('panel.user.edit',$data);
         }
-        
+
     }
     public function delete(Request $request) {
         if (!auth()->user()->isAbleTo('users-delete')) {
@@ -212,6 +212,40 @@ class UserController extends Controller
             return false;
         } else {
             return true;
+        }
+    }
+
+    public function profile() {
+        $data = array();
+        $data['profile'] = Auth::user();
+        return view("panel.profile.view", $data);
+    }
+
+    public function update_profile(Request $request, $id) {
+        $profile = User::find($id);
+        $profile->name = $request->name;
+        $profile->email = $request->email;
+        $profile->address = $request->address;
+        if($request->password) {
+            $profile->password = Hash::make($request->password);
+        }
+        if($profile->save()) {
+            if($request->hasFile('image')) {
+                $image = new UserImage();
+                $file = $request->file('image');
+                $file_name = time().'.'.$file->getClientOriginalExtension();
+                $destination_path = 'public/dist/img/user/'.$profile->id.'/';
+                $file->move($destination_path,$file_name);
+                $image->image_path = $destination_path.$file_name;
+                $image->user_id = $profile->id;
+                $image->created_by = Auth::user()->id;
+                $image->updated_by = Auth::user()->id;
+                $image->ip_address = $request->ip();
+                $image->save();
+            }
+            $message['alert'] = 'success';
+            $message['alert_message'] = 'Profile updated successfully!';
+            return redirect()->back()->with('message',$message);
         }
     }
 }

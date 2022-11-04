@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\LogEvent;
 use App\Events\UserCreated;
+use App\Listeners\LogEventListener;
 use App\Listeners\SuperadminAboutUserCreation;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;

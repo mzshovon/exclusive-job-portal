@@ -77,6 +77,20 @@
                                 </div>
                               </div>
                             </div>
+                            <div class="col-md-6">
+                                    <label class="col-form-label" for="inputSuccess">Section Position <span class="text-danger">*</span></span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="	fa fa-user-plus"></i></span>
+                                        </div>
+                                        <select class="form-control select2" id="section_position" name="section_position" style="width: 100%;">
+                                            <option selected="selected" disabled>-- Select Position --</option>
+                                            <option value="1" {{$section->section_position == 1 ? 'selected':''}}>Top</option>
+                                            <option value="2" {{$section->section_position == 2 ? 'selected':''}}>Middle</option>
+                                            <option value="3" {{$section->section_position == 3 ? 'selected':''}}>Bottom</option>
+                                          </select>
+                                    </div>
+                            </div>
                           </div>
                         </div>
                     </div>

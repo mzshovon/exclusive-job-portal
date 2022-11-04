@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
-// Route::get('/login', function () {
-//     return view('panel.auth.login');
-// })->name('login');
+
 Route::post('/logout', 'LoginController@logout')->name('logout');
 Route::get('/admin/login', function () {
     return view('welcome');
@@ -103,6 +101,11 @@ Route::group(['middleware'=>['auth']],function () {
     Route::any('/video/create', 'Admin\VideoController@store')->name('video-create');
     Route::any('/video/update/{id}', 'Admin\VideoController@update')->name('video-update');
     Route::post('/video/status/change', 'Admin\VideoController@change_status')->name('video-status-change');
+
+    // --------------- Video routes ---------------------- //
+    Route::get('/profile/view', 'Admin\UserController@profile')->name('profile-view');
+    Route::any('/profile/update/{id}', 'Admin\UserController@update_profile')->name('profile-update');
+    Route::post('/profile/status/change', 'Admin\UserController@change_status')->name('profile-status-change');
 
     // --------------- Excel export/import routes ---------------------- //
     Route::get('/excel/export/{name}/{id}', 'Admin\ExcelController@export_question_answer_excel')->name('excel-question-answer-export');

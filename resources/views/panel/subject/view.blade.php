@@ -85,7 +85,7 @@
                         {!! $subject->description !!}
                     </td>
                     <td>
-                        <img src="{{asset($subject->icon)}}">
+                        <img src="{{asset($subject->icon)}}" style="height: 40px; width: 40px">
                     </td>
                     <td>
                       Questions: <span class="badge badge-info">{{$subject->questions->count()}}</span>

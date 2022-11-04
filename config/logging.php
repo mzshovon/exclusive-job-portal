@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single','users'],
             'ignore_exceptions' => false,
         ],
 
@@ -50,7 +50,6 @@ return [
         'users' => [
             'driver' => 'single',
             'path' => storage_path('logs/users.log'),
-            'level' => 'info',
         ],
 
         'daily' => [

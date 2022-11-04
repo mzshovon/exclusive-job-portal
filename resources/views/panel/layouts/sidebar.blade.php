@@ -216,7 +216,7 @@
           @endif
           <li class="nav-header">Tools</li>
           <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
+            <a href="{{route('profile-view')}}"  class="nav-link">
               <i class="nav-icon far fa-user"></i>
               <p>
                 Profile

@@ -26,12 +26,14 @@ class SectionController extends Controller
                     'status'=>'required|in:0,1',
                     'title'=>'required|max:255',
                     'color'=>'required',
+                    'section_position'=>'required',
                     'icon'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:500'
                 ]);
                 $message = array();
                 $section = new Section();
                 $section->title = $request->title ? $request->title : null;
                 $section->description = $request->description ? $request->description : null;
+                $section->section_position = $request->section_position;
                 $section->status = $request->status;
                 $section->color = $request->color;
                 // dd($section);
@@ -64,6 +66,7 @@ class SectionController extends Controller
                     'status'=>'required|in:0,1',
                     'title'=>'required|max:255',
                     'color'=>'required',
+                    'section_position'=>'required',
                     // 'icon'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:500'
                 ]);
                 $message = array();
@@ -71,6 +74,7 @@ class SectionController extends Controller
                 $section->title = $request->title ? $request->title : null;
                 $section->description = $request->description ? $request->description : null;
                 $section->status = $request->status;
+                $section->section_position = $request->section_position;
                 $section->color = $request->color;
                 // dd($section);
                 if($request->hasFile('icon')) {

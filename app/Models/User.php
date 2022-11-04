@@ -40,12 +40,15 @@ class User extends Authenticatable
     public function userimages() {
         return $this->hasOne('App\Models\UserImage','user_id','id');
     }
+
     public function profile() {
         return $this->hasOne('App\Models\UserProfile','user_id','id');
     }
+
     public function messages() {
         return $this->belongsToMany('App\Models\Message');
     }
+
     public function push_notifcations() {
         return $this->belongsToMany('App\Models\PushNotification');
     }

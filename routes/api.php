@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/sections','Api\SectionApiController@getSections')->name('api-sections');
+Route::get('/packages','Api\PackageApiController@getPackages')->name('api-packages');
+Route::get('/packages/courses/{packageId}','Api\PackageApiController@getCoursesByPackages')->name('api-courses-packages');
+Route::get('/courses/subjects/{courseId}','Api\PackageApiController@getSubjectsByCourses')->name('api-subjects-courses');

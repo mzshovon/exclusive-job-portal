@@ -50,6 +50,9 @@
                       Icon
                     </th>
                     <th>
+                      Section Position
+                    </th>
+                    <th>
                       section Covered
                     </th>
                     <th>
@@ -88,6 +91,15 @@
                         <img src="{{asset($section->icon)}}">
                     </td>
                     <td>
+                        @if ($section->section_position == 1)
+                          <span class="badge badge-success badge-sm">Top</span>
+                        @elseif($section->section_position == 2)
+                          <span class="badge badge-info badge-sm">Middle</span>
+                        @else
+                          <span class="badge badge-warning badge-sm">Bottom</span>
+                        @endif
+                      </td>
+                    <td>
                       {{-- {{$section->new_price}} --}}
                       0
                     </td>
@@ -116,7 +128,7 @@
                           </button>
                         </span>
                     </td>
-                </tr> 
+                </tr>
                 @empty
                 <tr class="text-center">
                     No Data available!
@@ -139,7 +151,7 @@
     $("#dataTable").DataTable({
       "responsive": true,
       "autoWidth": false,
-     
+
     });
   });
   function changeStatus(id) {
