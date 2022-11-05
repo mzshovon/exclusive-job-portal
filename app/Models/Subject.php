@@ -36,44 +36,54 @@ class Subject extends Model
         return self::whereStatus(1)->get(['id', 'title', 'icon', 'color as color_code', 'description', 'status']);
     }
 
-    public static function getAllQuestionsById($subjectId)
+    public static function getMarkBySubjectId($subjectId)
     {
-        $questions_array = [];
-        $questions = self::with('questions')->find($subjectId);
+        $subject = self::with('questions')->find($subjectId);
 
-        if($questions) {
-            foreach($questions->questions as $question) {
-                $questions_array[] = [
+        if($subject) {
+            $collected_question_array = collect($subject->questions);
+            return [
+                "total_mark" => ($collected_question_array->count() * $collected_question_array->first()->mark),
+                "single_mark" => $collected_question_array->first()->mark,
+                "negative_mark" => $collected_question_array->first()->negative_mark,
+            ];
+        }
+    }
+
+    public static function getAllQuestionsWithOptionsById($subjectId, $options = true, $answers_only = false)
+    {
+        $subject = self::with('questions')->find($subjectId);
+
+        if($subject) {
+            return collect($subject->questions)->map(function($question) use ($options,$answers_only){
+                return !$answers_only ?
+                    ($options ? [
                         "id" => $question->id,
                         "question" => $question->name,
                         "mark" => $question->mark,
                         "negative_mark" => $question->negative_mark,
                         "type" => $question->type == 1 ? 'MCQ' : 'WRITTEN',
-                        "explanation" => $question->description,
                         "status" => $question->status,
                         "options" => self::getAllOptionsWithAnswerByQuestionId($question)
-                    ];
-            }
+                    ] : $question->id) : self::getAllOptionsWithAnswerByQuestionId($question, true);
+            });
         }
-
-        return $questions_array;
     }
 
-    private static function getAllOptionsWithAnswerByQuestionId($question)
+    private static function getAllOptionsWithAnswerByQuestionId($question, $is_answer = false)
     {
-        $options_array = [];
+        $collected_answer_array = collect($question->answers);
 
-        if($question) {
-            foreach($question->answers as $option) {
-                $options_array[] = [
-                    'id' => $option->id,
-                    'option' => $option->name,
-                    'is_answer' => $option->is_answer,
-                    'description' => $option->description,
-                ];
-            }
+        if($collected_answer_array) {
+            return !$is_answer ?
+                    $collected_answer_array->map(function($option){
+                        return [
+                            'id' => $option->id,
+                            'option' => $option->name,
+                            'is_answer' => $option->is_answer,
+                            'description' => $option->description,
+                        ];
+                    }) : $collected_answer_array->firstWhere('is_answer', 1)->id;
         }
-
-        return $options_array;
     }
 }
