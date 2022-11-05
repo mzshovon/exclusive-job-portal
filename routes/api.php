@@ -20,6 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/sections','Api\SectionApiController@getSections')->name('api-sections');
 
+Route::get('/faqs','Api\UtilityApiController@getFaqs')->name('api-sections');
+
+Route::get('/videos','Api\UtilityApiController@getVideos')->name('api-videos');
+
+Route::get('/abouts','Api\UtilityApiController@getAbouts')->name('api-abouts');
+
 Route::group(['prefix' => 'packages'], function(){
     Route::get('/','Api\PackageApiController@getPackages')->name('api-packages');
     Route::get('/courses/{packageId}','Api\PackageApiController@getCoursesByPackages')->name('api-courses-packages');
