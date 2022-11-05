@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class ModelSets extends Model
 {
     use HasUser;
+
     protected $table = 'models';
 
     public function subjects() {

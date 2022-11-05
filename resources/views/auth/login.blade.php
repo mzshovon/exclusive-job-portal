@@ -3,6 +3,8 @@
 <div class="login-logo">
     <a href="#">{{ config('app.name', 'Laravel') }}</a>
   </div>
+  @include('panel.layouts.alert')
+  @include('panel.layouts.validation')
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
@@ -43,20 +45,10 @@
           <!-- /.col -->
         </div>
       </form>
-
-      {{-- <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-    </div> --}}
       <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
+        {{-- <a href="forgot-password.html">I forgot my password</a> --}}
       </p>
-      <p class="mb-0">
+      <p class="mb-0 mt-2 text-center">
         <a href="{{url('register')}}" class="text-center">Register a new membership</a>
       </p>
     </div>

@@ -3,7 +3,8 @@
 <div class="register-logo">
     <a href="../../index2.html"><b>Admin</b>LTE</a>
   </div>
-
+  @include('panel.layouts.alert')
+  @include('panel.layouts.validation')
   <div class="card">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new membership</p>
@@ -41,13 +42,6 @@
               <span class="fas fa-lock"></span>
             </div>
           </div>
-        </div>
-        <div class="input-group mb-3">
-            <select class="custom-select" name="user_type">
-                <option disabled selected>----- Select user type -----</option>
-                <option value="customer">Customer</option>
-                <option value="vendor">Vendor</option>
-            </select>
         </div>
         <div class="row">
           <div class="col-8">
