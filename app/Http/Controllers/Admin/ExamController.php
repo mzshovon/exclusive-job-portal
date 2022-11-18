@@ -218,7 +218,7 @@ class ExamController extends Controller
             }
         } elseif ($request->isMethod('get')) {
             $data = array();
-            $data['title'] = 'Store questions';
+            $data['title'] = 'Store Exam questions';
             $data['question_card_title'] = 'Questions Section';
             $data['type'] = 'exam';
             $data['subject'] = Exam::findOrFail($exam_id);

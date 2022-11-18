@@ -195,7 +195,7 @@ class SubjectController extends Controller
             }
         } elseif ($request->isMethod('get')) {
             $data = array();
-            $data['title'] = 'Store questions';
+            $data['title'] = 'Store subject questions';
             $data['question_card_title'] = 'Questions Section';
             $data['type'] = 'subject';
             $data['subject'] = Subject::findOrFail($subject_id);

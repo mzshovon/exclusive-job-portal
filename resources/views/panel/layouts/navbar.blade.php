@@ -143,7 +143,7 @@
           </li>
           <!-- Menu Footer-->
           <li class="user-footer">
-            <a href="#" class="btn btn-default btn-flat">Profile</a>
+            <a  href="{{ route('profile-view') }}" class="btn btn-default btn-flat">Profile</a>
             <a href="#" class="btn btn-default btn-flat float-right" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                           document.getElementById('logout-form').submit();">Sign out</a>

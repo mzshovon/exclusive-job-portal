@@ -14,7 +14,7 @@ class SectionController extends Controller
         public function view()
         {
             $data = array();
-            $data['title'] = 'section Section';
+            $data['title'] = 'App section';
             $data['sections'] = Section::all();
             return view('panel.section.view',$data);
         }
@@ -55,7 +55,7 @@ class SectionController extends Controller
                 }
             } elseif ($request->isMethod('get')) {
                 $data = array();
-                $data['title'] = 'Create section Section';
+                $data['title'] = 'Create App Section';
                 return view('panel.section.add',$data);
             }
         }
@@ -96,7 +96,7 @@ class SectionController extends Controller
             } elseif ($request->isMethod('get')) {
                 $data = array();
                 $data['section'] = Section::find($id);
-                $data['title'] = 'Update section Section';
+                $data['title'] = 'Update App Section';
                 return view('panel.section.edit',$data);
             }
         }

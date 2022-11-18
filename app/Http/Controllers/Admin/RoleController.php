@@ -13,6 +13,7 @@ class RoleController extends Controller
 {
     public function view() {
         $data = array();
+        $data['title'] = "Roles";
         $data['roles'] = Role::with('permissions','users')->get();
         return view('panel.role.view',$data);
     }
@@ -44,6 +45,7 @@ class RoleController extends Controller
 
         } elseif ($request->isMethod('get')) {
             $data = array();
+            $data['title'] = "Add Role";
             $data['permissions'] = Permission::all();
             return view('panel.role.add',$data);
         }
@@ -77,6 +79,7 @@ class RoleController extends Controller
         } elseif ($request->isMethod('get')) {
             $data = array();
             $role_permissions = array();
+            $data['title'] = "Update Role";
             $data['permissions'] = Permission::all();
             $data['role'] = Role::with('permissions','users')->whereId($id)->first();
             foreach ($data['role']->permissions as $permission){

@@ -94,6 +94,7 @@ class UserController extends Controller
 
         } elseif ($request->isMethod('get')) {
             $data = array();
+            $data['title'] = "Create Users";
             $data['permissions'] = Permission::all();
             $data['roles'] = Role::all();
             return view('panel.user.add',$data);
@@ -157,6 +158,7 @@ class UserController extends Controller
             $data = array();
             $permissions_user = array();
             $roles_user = array();
+            $data['title'] = "Update Users";
             $data['user'] = User::with('permissions','roles','userimages')->whereId($id)->first();
             $data['permissions'] = Permission::all();
             $data['roles'] = Role::all();
@@ -217,6 +219,7 @@ class UserController extends Controller
 
     public function profile() {
         $data = array();
+        $data['title'] = "Profile Section";
         $data['profile'] = Auth::user();
         return view("panel.profile.view", $data);
     }

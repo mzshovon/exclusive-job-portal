@@ -28,12 +28,14 @@ class HomeController extends Controller
     public function index()
     {
         $data = array();
+        $data['title'] = "Dashboard";
         $data['comments'] = Comment::with('questions','replies')->whereSeen(0)->orderBy('created_at','desc')->take(6)->get();
         return view('panel.dashboard.index',$data);
     }
     public function comments_view()
     {
         $data = array();
+        $data['title'] = "Comment Section";
         $data['comments'] = Comment::with('questions','replies')->whereSeen(0)->orderBy('created_at','desc')->take(6)->get();
         return view('panel.dashboard.comments.view',$data);
     }
@@ -62,6 +64,7 @@ class HomeController extends Controller
     public function question_comments_view($id)
     {
         $data = array();
+        $data['title'] = "Comment Section";
         $data['question'] = Question::with('comments')->find($id);
         return view('panel.dashboard.comments.question_wise_comment_view',$data);
     }
