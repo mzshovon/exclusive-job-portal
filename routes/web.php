@@ -97,6 +97,7 @@ Route::group(['middleware'=>['auth']],function () {
         Route::any('/exam/question_update/{exam_id}', 'Admin\ExamController@exam_question_update')->name('exam-question-update');
         Route::any('/exam/update/{id}', 'Admin\ExamController@update')->name('exam-update');
         Route::post('/exam/status/change', 'Admin\ExamController@change_status')->name('exam-status-change');
+        Route::get('/exam/subject/questions', 'Admin\ExamController@getQuestions')->name('exam-subject-questions');
 
         // --------------- Video routes ---------------------- //
         Route::get('/video/view', 'Admin\VideoController@view')->name('video-view');

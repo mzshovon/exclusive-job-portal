@@ -153,6 +153,30 @@ class ExamController extends Controller
             return Response::json($message, $status_code);
         }
     }
+    public function getQuestions(Request $request)
+    {
+        // if (!auth()->user()->isAbleTo('exam-delete')) {
+        //     return redirect()->route('unauthorized');
+        // }
+        if ($request->ajax()) {
+            $id = $request->get('id');
+            $message = array();
+            $data = Subject::with('questions')->find($id);
+            if ($data) {
+                $message['data'] = collect($data->questions)->map(function($question){
+                    return [
+                        "id" => $question->id,
+                        "text" => $question->name
+                    ];
+                });
+                $status_code = 200;
+            } else {
+                $message['data'] = $data;
+                $status_code = 501;
+            }
+            return Response::json($message, $status_code);
+        }
+    }
 
     // Store the exam questions info
     public function exam_question_store($exam_id, Request $request)
@@ -163,68 +187,28 @@ class ExamController extends Controller
                 'mark' => 'required',
                 'number' => 'required',
                 'type' => 'required|in:1,2',
-                'question_.*' => 'required|max:255',
-                'answer_.*' => 'required',
+                'questions.*' => 'required',
             ]);
-            if ($request->type == 2) {
-                for ($i = 1; $i <= ($request->number); $i++) {
-                    $question = new Question();
-                    $question->name = $request->input('question_' . $i, '');
-                    $question->mark = $request->mark;
-                    $question->negative_mark = $request->negative_mark;
-                    $question->type = $request->type;
-                    $question->status = $request->status;
-                    $question->save();
-                    $answer = new Answer();
-                    $answer->name = $request->input('answer_' . $i, '');
-                    $answer->is_answer = 1;
-                    $answer->description = $request->description ?? null;
-                    $answer->save();
-                    $exam = Exam::find($exam_id);
-                    $exam->questions()->attach($question->id);
-                    $question->answers()->attach($answer->id);
-                }
-                $message['alert'] = 'success';
-                $message['alert_message'] = 'Questions and Answers added to ' . $exam->title . ' successfully!';
-                return redirect()->route('exam-view')->with('message', $message);
-            }
-            if ($request->type == 1) {
-                for ($i = 1; $i <= ($request->number); $i++) {
-                    $question = new Question();
-                    $question->name = $request->input('question_' . $i, '');
-                    $question->description = $request->input('description_' . $i, '');
-                    $question->mark = $request->mark;
-                    $question->negative_mark = $request->negative_mark;
-                    $question->type = $request->type;
-                    $question->status = $request->status;
-                    $question->save();
-                    for ($j = 1; $j <= 10; $j++) {
-                        if ($request->input('answer_' . $i . '_' . $j, '')) {
-                            $answer = new Answer();
-                            $answer->name = $request->input('answer_' . $i . '_' . $j, '');
-                            $answer->is_answer = $request->input('is_answer_' . $i . '_' . $j, '') == 1 ?? 0;
-                            $answer->description = $request->description ?? null;
-                            $answer->save();
-                            $question->answers()->attach($answer->id);
-                        }
-                        continue;
-                    }
-                    $exam = Exam::find($exam_id);
-                    $exam->questions()->attach($question->id);
-                }
-                $message['alert'] = 'success';
-                $message['alert_message'] = 'Questions and Answers added to ' . $exam->title . ' successfully!';
-                return redirect()->route('exam-view')->with('message', $message);
-            }
+            $exam = Exam::find($exam_id);
+            $exam->questions()->attach($request->questions);
+            $message['alert'] = 'success';
+            $message['alert_message'] = 'Questions and Answers added to ' . $exam->title . ' successfully!';
+            return redirect()->route('exam-view')->with('message', $message);
         } elseif ($request->isMethod('get')) {
             $data = array();
             $data['title'] = 'Store Exam questions';
             $data['question_card_title'] = 'Questions Section';
             $data['type'] = 'exam';
-            $data['subject'] = Exam::findOrFail($exam_id);
+            $data['exam'] = Exam::findOrFail($exam_id);
+            $data['written_subjects'] = Subject::with('questions')->whereHas('questions', function($q){
+                $q->whereType(2);
+            })->get();
+            $data['mcq_subjects'] = Subject::with('questions')->whereHas('questions', function($q){
+                $q->whereType(1);
+            })->get();
             $data['data'] = Exam::with('questions')->get();
             // dd($data['data']);
-            return view('panel.question.add', $data);
+            return view('panel.question.exam', $data);
         }
     }
     // Update the exam questions info
