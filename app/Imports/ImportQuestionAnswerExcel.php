@@ -2,6 +2,7 @@
 namespace App\Imports;
 
 use App\Models\Answer;
+use App\Models\Chapter;
 use App\Models\Exam;
 use App\Models\Question;
 use App\Models\Subject;
@@ -17,7 +18,7 @@ class ImportQuestionAnswerExcel implements ToCollection
     public function collection(Collection $rows)
     {
        $status = 1;
-       $upload = $this->data['upload_type'] == 'subject' ? Subject::find($this->data['id']) : Exam::find($this->data['id']);
+       $upload = ($this->data['upload_type'] == 'subject' ? Subject::find($this->data['id']) : ($this->data['upload_type'] == 'chapter' ? Chapter::find($this->data['id']) : Exam::find($this->data['id'])));
     //    dd($upload);
        foreach($rows as $row) {
         $question = new Question();

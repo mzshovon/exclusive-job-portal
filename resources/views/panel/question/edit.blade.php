@@ -8,7 +8,7 @@
 @section('content')
 <section class="content-header">
     <div class="container-fluid">
-        <form role="form" action="{{route($type.'-question-update',[$type == 'subject'? 'subject_id':'exam_id'=>$subject->id])}}" method="post" enctype="multipart/form-data">
+        <form role="form" action="{{route($type.'-question-update',[$type == 'subject'? 'subject_id':($type == 'chapter' ? 'chapter_id' : 'exam_id')=>$chapter->id])}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-md-12">
@@ -27,7 +27,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                                             </div>
-                                            <input type="text" id="title" name="title" class="form-control" value="{{$subject ? $subject->title : ''}}" readonly>
+                                            <input type="text" id="title" name="title" class="form-control" value="{{$chapter ? $chapter->title : ''}}" readonly>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -38,7 +38,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                                                     </div>
-                                                    <input type="number" id="title" name="mark" class="form-control" value="{{$subject->questions->first()->mark}}" disabled>
+                                                    <input type="number" id="title" name="mark" class="form-control" value="{{$chapter->questions->first()->mark}}" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -49,7 +49,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                                                     </div>
-                                                    <input type="number" id="title" name="negative_mark" class="form-control" value="{{$subject->questions->first()->negative_mark}}" disabled>
+                                                    <input type="number" id="title" name="negative_mark" class="form-control" value="{{$chapter->questions->first()->negative_mark}}" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,8 +64,8 @@
                                             </div>
                                             <select class="form-control select2" id="status" name="status" style="width: 100%;">
                                                 <option selected="selected" disabled>-- Select Status --</option>
-                                                <option value="1" {{$subject->status == 1 ? 'selected':''}}>Active</option>
-                                                <option value="0" {{$subject->status == 0 ? 'selected':''}}>Deactive</option>
+                                                <option value="1" {{$chapter->status == 1 ? 'selected':''}}>Active</option>
+                                                <option value="0" {{$chapter->status == 0 ? 'selected':''}}>Deactive</option>
                                             </select>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                                                     </div>
-                                                    <input type="number" id="title" name="number" value="{{$subject->questions()->count()}}" readonly class="form-control">
+                                                    <input type="number" id="title" name="number" value="{{$chapter->questions()->count()}}" readonly class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -90,8 +90,8 @@
                                                     </div>
                                                     <select class="form-control select2" id="status" name="type" style="width: 100%;" readonly>
                                                         <option selected="selected" readonly>-- Select Type --</option>
-                                                        <option value="2" {{$subject->questions->first()->type == 2 ? 'selected':''}}>Written</option>
-                                                        <option value="1" {{$subject->questions->first()->type == 1 ? 'selected':''}}>MCQ</option>
+                                                        <option value="2" {{$chapter->questions->first()->type == 2 ? 'selected':''}}>Written</option>
+                                                        <option value="1" {{$chapter->questions->first()->type == 1 ? 'selected':''}}>MCQ</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -105,8 +105,8 @@
                                             <span class="card_header_counter" style="float: right"></span>
                                         </div>
                                         <div class="card-body form-data-role question_card">
-                                            @if ($subject->questions->first()->type == 2)
-                                            @forelse ($subject->questions as $question)
+                                            @if ($chapter->questions->first()->type == 2)
+                                            @forelse ($chapter->questions as $question)
                                               <br>
                                               <div class="row question_section">
                                                   <div class="col-md-12">
@@ -123,7 +123,7 @@
                                                   <div class="col-md-12">
                                                       <div class="form-group">
                                                           <label>Answer <span class="text-danger">*</span></label>
-                                                          <textarea class="textarea form-control" rows="3" name="answer[{{$question->answers->first()->id}}]" placeholder="Describe about the subject ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
+                                                          <textarea class="textarea form-control" rows="3" name="answer[{{$question->answers->first()->id}}]" placeholder="Describe about the chapter ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                                                           {{$question->answers->first()->name}}
                                                           </textarea>
                                                       </div>
@@ -133,7 +133,7 @@
                                             No Data Found!
                                             @endforelse
                                             @else
-                                              @forelse ($subject->questions as $question)
+                                              @forelse ($chapter->questions as $question)
                                                 <br><div class="row question_section">
                                                   <div class="col-md-12">
                                                     <div class="form-group">
@@ -152,7 +152,7 @@
                                                         <div class="col-md-6">
                                                           <div class="form-group">
                                                             <label>Option <span class="text-danger">*</span></label>
-                                                            <textarea class="textarea form-control" rows="3" name="answer[{{$answer->id}}]" placeholder="Describe about the subject ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
+                                                            <textarea class="textarea form-control" rows="3" name="answer[{{$answer->id}}]" placeholder="Describe about the chapter ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                                                             {!! $answer->name !!}
                                                             </textarea>
                                                           </div>
@@ -166,7 +166,7 @@
                                                   <div class="col-md-12">
                                                     <div class="form-group">
                                                       <label class="col-form-label" for="inputSuccess">Explanation </label>
-                                                      <textarea class="textarea form-control" rows="3" name="description[{{$question->id}}]" placeholder="Describe about the subject ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
+                                                      <textarea class="textarea form-control" rows="3" name="description[{{$question->id}}]" placeholder="Describe about the chapter ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                                                         {!! $question->description !!}
                                                         </textarea>
                                                     </div>
@@ -238,7 +238,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Answer <span class="text-danger">*</span></label>
-                <textarea class="textarea form-control" rows="3" name="answer_${i}" placeholder="Describe about the subject ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                <textarea class="textarea form-control" rows="3" name="answer_${i}" placeholder="Describe about the chapter ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
               </div>
             </div>
         </div>`).ready(function() {

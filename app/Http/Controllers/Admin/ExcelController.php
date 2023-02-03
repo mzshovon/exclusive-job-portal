@@ -15,6 +15,7 @@ use App\Exports\UserExcelExport;
 use App\Models\User;
 use App\Imports\ImportQuestionAnswerExcel;
 use App\Imports\QuestionsImport;
+use App\Models\Chapter;
 
 class ExcelController extends Controller
 {
@@ -61,7 +62,7 @@ class ExcelController extends Controller
             if(Excel::import(new ImportQuestionAnswerExcel($data),$request->file('excel'))) {
                 $message['alert'] = 'success';
                 // dd($upload_type);
-                $message['alert_message'] = 'Questions and Answers added to ' . ($upload_type == "subject" ? Subject::find($id)->title : Exam::find($id)->title) . ' successfully!';
+                $message['alert_message'] = 'Questions and Answers added to ' . ($upload_type == "subject" ? Subject::find($id)->title : ($upload_type == "chapter" ? Chapter::find($id)->title : Exam::find($id)->title) ) . ' successfully!';
                 return redirect()->route(($upload_type == "subject" ? 'subject-view' : 'exam-view'))->with('message', $message);
             }
         }

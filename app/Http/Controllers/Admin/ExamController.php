@@ -56,7 +56,7 @@ class ExamController extends Controller
             }
             if ($exam->save()) {
                 if ($request->subject) {
-                    $exam->subjects()->attach($request->subject);
+                    $exam->chapters()->attach($request->chapter);
                 }
                 $message['alert'] = 'success';
                 $message['alert_message'] = 'Exam created successfully!';
@@ -266,7 +266,7 @@ class ExamController extends Controller
             $data['title'] = 'Update questions';
             $data['question_card_title'] = 'Questions Section';
             $data['type'] = 'exam';
-            $data['subject'] = Exam::findOrFail($exam_id);
+            $data['chapter'] = Exam::findOrFail($exam_id);
             $data['data'] = Exam::with('questions')->get();
             // dd($data['data']);
             return view('panel.question.edit', $data);

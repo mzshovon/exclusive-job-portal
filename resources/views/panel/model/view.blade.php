@@ -85,7 +85,7 @@
                         {!! $model->description !!}
                     </td>
                     <td>
-                        <img src="{{asset($model->icon)}}">
+                        <img src="{{asset($model->icon)}}" style="height: 40px; width:40px">
                     </td>
                     <td>
                       {{-- {{$model->new_price}} --}}
@@ -116,7 +116,7 @@
                           </button>
                         </span>
                     </td>
-                </tr> 
+                </tr>
                 @empty
                 <tr class="text-center">
                     No Data available!
@@ -139,7 +139,7 @@
     $("#dataTable").DataTable({
       "responsive": true,
       "autoWidth": false,
-     
+
     });
   });
   function changeStatus(id) {

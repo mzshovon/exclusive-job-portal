@@ -22,13 +22,30 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="col-form-label" for="inputSuccess">Title <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text"><i class="fa fa-address-card"></i></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="col-form-label" for="inputSuccess">Title <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="fa fa-address-card"></i></span>
+                                        </div>
+                                        <input type="text" id="title" name="title" class="form-control" value="{{$package->title}}">
                                     </div>
-                                    <input type="text" id="title" name="title" class="form-control" value="{{$package->title}}">
-                                </div>
+                                  </div>
+                                <div class="col-md-6">
+                                  <label class="col-form-label" for="inputSuccess">Status <span class="text-danger">*</span></span></label>
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="	fa fa-user-plus"></i></span>
+                                      </div>
+                                      <select class="form-control" id="status" name="status" style="width: 100%;">
+                                          <option selected="selected" disabled>-- Select Status --</option>
+                                          <option value="1" {{$package->status == 1 ? 'selected':''}}>Active</option>
+                                          <option value="0" {{$package->status == 0 ? 'selected':''}}>Deactive</option>
+                                        </select>
+                                  </div>
+                                  </div>
+                              </div>
                           </div>
                           <div class="form-group">
                             <div class="row">
@@ -77,19 +94,6 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <div class="row">
-                          <div class="col-md-6">
-                            <label class="col-form-label" for="inputSuccess">Status <span class="text-danger">*</span></span></label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="	fa fa-user-plus"></i></span>
-                                </div>
-                                <select class="form-control" id="status" name="status" style="width: 100%;">
-                                    <option selected="selected" disabled>-- Select Status --</option>
-                                    <option value="1" {{$package->status == 1 ? 'selected':''}}>Active</option>
-                                    <option value="0" {{$package->status == 0 ? 'selected':''}}>Deactive</option>
-                                  </select>
-                            </div>
-                            </div>
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label>Assign Models <span class="text-danger">*</span></span></label>
@@ -98,6 +102,21 @@
                                   {{-- {{in_array($model->id, $subject_list) ? 'selected':''}} --}}
                                   @forelse ($models as $model)
                                     <option value="{{$model->id}}" {{in_array($model->id, $model_list) ? 'selected':''}}>{{$model->title}}</option>
+                                  @empty
+                                      No Data Found
+                                  @endforelse
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label>Assign Sections <span class="text-danger">*</span></span></label>
+                                <div class="select2-purple">
+                                <select class="select2" data-dropdown-css-class="select2-purple" multiple="multiple" data-placeholder="Select Models" name="section[]" style="width: 100%;">
+                                  {{-- {{in_array($model->id, $subject_list) ? 'selected':''}} --}}
+                                  @forelse ($sections as $section)
+                                    <option value="{{$section->id}}" {{in_array($section->id, $section_list) ? 'selected':''}}>{{$section->title}}</option>
                                   @empty
                                       No Data Found
                                   @endforelse

@@ -40,7 +40,7 @@
                                     </div>
                                     {{-- {{Carbon\Carbon::parse($exam->start_date)->format('d/m/Y').' - '.Carbon\Carbon::parse($exam->end_date)->format('d/m/Y')}} --}}
                                     <input type="text" class="form-control float-right" id="reservationtime" name="date_duration" value="{{$exam->start_date && $exam->end_date ? Carbon\Carbon::parse($exam->start_date)->format('m/d/Y').' - '.Carbon\Carbon::parse($exam->end_date)->format('m/d/Y'):''}}">
-                                  </div>                                  
+                                  </div>
                                 </div>
                                 <div class="col-md-6">
                                   <label>Duration:</label>
@@ -56,10 +56,10 @@
                             </div>
                           <div class="form-group">
                             <label>Assign Subjects (Optional)</label>
-                            <select class="form-control select2bs4" data-placeholder="Select Subjects" name="subject[]" style="width: 100%;" {{$exam->questions->count() > 0 ? 'disabled':''}}>
-                              <option disabled {{$exam->subjects->count() == 0?'selected':''}}>------Select Subject------</option>
-                              @forelse ($subjects as $subject)
-                                <option value="{{$subject->id}}" {{$exam->subjects->count() > 0 && $exam->subjects->first()->id == $subject->id?'selected':''}}>{{$subject->title}}</option>
+                            <select class="form-control select2bs4" data-placeholder="Select Subjects" name="chapter[]" style="width: 100%;" {{$exam->chapters->count() > 0 ? 'disabled':''}}>
+                              <option disabled {{$exam->chapters->count() == 0?'selected':''}}>------Select Chapter------</option>
+                              @forelse ($chapters as $chapter)
+                                <option value="{{$chapter->id}}" {{$exam->chapters->count() > 0 && $exam->chapters->first()->id == $chapter->id?'selected':''}}>{{$chapter->title}}</option>
                               @empty
                                   No Data Found
                               @endforelse

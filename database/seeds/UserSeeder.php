@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         if(User::count() <= 0) {
             $data = [
                 'name' => "Super admin",
-                'email' => "admin@exampreparation.com",
+                'email' => "admin@bankjobpreparation.com",
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345678'), // password
                 'remember_token' => Str::random(10),

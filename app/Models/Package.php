@@ -13,6 +13,10 @@ class Package extends Model
         return $this->belongsToMany('App\Models\ModelSets');
     }
 
+    public function sections() {
+        return $this->belongsToMany('App\Models\Section');
+    }
+
     public static function getAllActivePackages()
     {
         return self::whereStatus(1)->get(['id', 'title', 'icon', 'color as color_code',

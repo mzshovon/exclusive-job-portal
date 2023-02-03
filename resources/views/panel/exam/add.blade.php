@@ -55,7 +55,7 @@
                             </div>
                             <div class="form-group">
                               <label>Assign Chapters (Optional)</label>
-                              <select class="form-control select2bs4" data-placeholder="Select chapters" name="subject[]" style="width: 100%;">
+                              <select class="form-control select2bs4" data-placeholder="Select chapters" name="chapter[]" style="width: 100%;">
                                 <option disabled selected>------Select Chapter------</option>
                                 @forelse ($chapters as $chapter)
                                   <option value="{{$chapter->id}}">{{$chapter->title}}</option>

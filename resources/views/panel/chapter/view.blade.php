@@ -160,7 +160,7 @@
         var button = $(event.relatedTarget)
         var recipient = button.data('id')
         var modal = $(this)
-        modal.find('form').attr('action',`{{url('chapter/question_create_from_excel/chapter/${recipient}')}}`);
+        modal.find('form').attr('action',`{{url('subject/question_create_from_excel/chapter/${recipient}')}}`);
     });
   $(function () {
     $("#dataTable").DataTable({

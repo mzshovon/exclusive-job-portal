@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ModelSets;
 use App\Models\Package;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -53,7 +54,12 @@ class PackageController extends Controller
                 $package->icon = $destination_path.$file_name;
             }
             if($package->save()) {
-                $package->model_sets()->attach($request->model);
+                if($request->model){
+                    $package->model_sets()->attach($request->model);
+                }
+                if($request->section){
+                    $package->sections()->attach($request->section);
+                }
                 $message['alert'] = 'success';
                 $message['alert_message'] = 'Package section created successfully!';
                 return redirect('package/create')->with('message',$message);
@@ -66,6 +72,7 @@ class PackageController extends Controller
             $data = array();
             $data['title'] = 'Create Package Section';
             $data['models'] = ModelSets::all();
+            $data['sections'] = Section::all();
             return view('panel.package.add',$data);
         }
     }
@@ -102,7 +109,12 @@ class PackageController extends Controller
                 $package->icon = $destination_path.$file_name;
             }
             if($package->save()) {
-                $package->model_sets()->sync($request->model);
+                if($request->model){
+                    $package->model_sets()->sync($request->model);
+                }
+                if($request->section){
+                    $package->sections()->sync($request->section);
+                }
                 $message['alert'] = 'success';
                 $message['alert_message'] = 'Package section updated successfully!';
                 return redirect()->back()->with('message',$message);
@@ -113,13 +125,18 @@ class PackageController extends Controller
             }
         } elseif ($request->isMethod('get')) {
             $data = array();
-            $packages = Package::with('model_sets')->find($id);
+            $packages = Package::with('model_sets', 'sections')->find($id);
             $data['model_list'] = [];
+            $data['section_list'] = [];
             foreach ($packages->model_sets as $key=>$model) {
                 array_push($data['model_list'] ,$model->id);
             }
+            foreach ($packages->sections as $key=>$section) {
+                array_push($data['section_list'] ,$section->id);
+            }
             $data['package'] = $packages;
             $data['models'] = ModelSets::get();
+            $data['sections'] = Section::get();
             $data['title'] = 'Update Package Section';
             return view('panel.package.edit',$data);
         }

@@ -14,6 +14,10 @@ class Exam extends Model
         return $this->belongsToMany('App\Models\Subject');
     }
 
+    public function chapters() {
+        return $this->belongsToMany('App\Models\Chapter');
+    }
+
     public function questions() {
         return $this->belongsToMany('App\Models\Question');
     }

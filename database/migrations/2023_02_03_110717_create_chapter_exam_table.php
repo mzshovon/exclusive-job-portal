@@ -14,8 +14,13 @@ class CreateChapterExamTable extends Migration
     public function up()
     {
         Schema::create('chapter_exam', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('chapter_id');
+            $table->unsignedBigInteger('exam_id');
+            $table->foreign('chapter_id')->references("id")->on('chapters')
+            ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('exam_id')->references("id")->on('exams')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->primary(['chapter_id', 'exam_id']);
         });
     }
 

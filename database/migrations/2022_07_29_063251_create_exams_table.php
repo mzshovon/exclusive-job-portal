@@ -21,8 +21,8 @@ class CreateExamsTable extends Migration
             $table->string('description')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->dateTime('start_time')->nullableTimestamps(0);
-            $table->dateTime('end_time')->nullableTimestamps(0);
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->integer('duration')->nullable();
             $table->integer('exam_type')->comment("1=Online Test, 2= IQ Test")->nullable(false);
             $table->foreignId("created_by")->constrained("users")->onDelete("cascade");
@@ -57,7 +57,7 @@ class CreateExamsTable extends Migration
             $table->foreign('exam_id')->references("id")->on('exams')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references("id")->on('users')
-            ->onUpdate('cascade')->onDelete('cascade');                
+            ->onUpdate('cascade')->onDelete('cascade');
             $table->primary(['user_id', 'exam_id']);
         });
     }
