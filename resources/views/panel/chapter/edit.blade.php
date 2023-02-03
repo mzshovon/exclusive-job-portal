@@ -8,7 +8,7 @@
 @section('content')
 <section class="content-header">
     <div class="container-fluid">
-      <form role="form" action="{{route('subject-create')}}" method="post" enctype="multipart/form-data">
+      <form role="form" action="{{route('chapter-update',['id'=>$chapter->id])}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
           <div class="col-md-12">
@@ -27,18 +27,27 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                                     </div>
-                                    <input type="text" id="title" name="title" class="form-control">
+                                    <input type="text" id="title" name="title" class="form-control" value="{{$chapter->title}}">
                                 </div>
                           </div>
                           <div class="form-group">
-                            <label for="exampleInputFile">Icon Upload</label>
-                            <div class="input-group">
-                              <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="exampleInputFile" name="icon">
-                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            <div class="row">
+                              <div class="col-md-10">
+                                <label for="exampleInputFile">Icon Upload</label>
+                                <div class="input-group">
+                                  <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="exampleInputFile" name="icon" onchange="preview_image()">
+                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                  </div>
+                                  <div class="input-group-append">
+                                    <span class="input-group-text" id="">Upload</span>
+                                  </div>
+                                </div>
                               </div>
-                              <div class="input-group-append">
-                                <span class="input-group-text" id="">Upload</span>
+                              <div class="col-md-2">
+                                @if ($chapter->icon)
+                                    <img class="icon_image" src="{{asset($chapter->icon)}}" style="margin:20px;height:30px;width:30px">
+                                @endif
                               </div>
                             </div>
                           </div>
@@ -50,46 +59,33 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="	fa fa-user-plus"></i></span>
                             </div>
-                            <select class="form-control" id="status" name="status" style="width: 100%;">
+                            <select class="form-control select2" id="status" name="status" style="width: 100%;">
                                 <option selected="selected" disabled>-- Select Status --</option>
-                                <option value="1">Active</option>
-                                <option value="0">Deactive</option>
+                                <option value="1" {{$chapter->status == 1 ? 'selected':''}}>Active</option>
+                                <option value="0" {{$chapter->status == 0 ? 'selected':''}}>Deactive</option>
                               </select>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Color</label>
-                                <div class="input-group my-colorpicker2">
-                                    <input type="text" class="form-control" name="color">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-square"></i></span>
-                                    </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <label>Color</label>
+                              <div class="input-group my-colorpicker2">
+                                <input type="text" class="form-control" name="color" value="{{$chapter->color}}">
+                                <div class="input-group-append">
+                                  <span class="input-group-text"><i class="fas fa-square"></i></span>
                                 </div>
+                              </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Assign Chapters <span class="text-danger">*</span></span></label>
-                                    <div class="select2-purple">
-                                        <select class="select2" data-dropdown-css-class="select2-purple" multiple="multiple" data-placeholder="Select Subjects" name="chapter[]" style="width: 100%;">
-                                            @forelse ($chapters as $chapter)
-                                            <option value="{{$chapter->id}}">{{$chapter->title}}</option>
-                                            @empty
-                                            No Data Found
-                                            @endforelse
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                          </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                     <div class="form-group">
                       <label>Description <span class="text-danger">*</span></label>
-                      <textarea class="textarea form-control" rows="3" name="description" placeholder="Describe about the subject ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                      <textarea class="textarea form-control" rows="3" name="description" placeholder="Describe about the chapter ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
+                        {!! $chapter->description !!}
+                      </textarea>
                     </div>
                     </div>
                 </div>
@@ -121,13 +117,15 @@
   <script src="{{ asset('public/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>v --}}
 
   <script>
+    function preview_image() {
+      $(".icon_image").attr("src",URL.createObjectURL(event.target.files[0]));
+    }
     $(document).ready(function () {
       bsCustomFileInput.init();
     });
     $('.duallistbox').bootstrapDualListbox();
     $('.duallistboxroles').bootstrapDualListbox();
     $('[data-mask]').inputmask();
-    $('.select2').select2();
     $(function () {
     // Summernote
     $('.textarea').summernote();

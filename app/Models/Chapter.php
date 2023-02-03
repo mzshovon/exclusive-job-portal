@@ -5,24 +5,20 @@ namespace App\Models;
 use App\Models\Traits\HasUser;
 use Illuminate\Database\Eloquent\Model;
 
-class Subject extends Model
+class Chapter extends Model
 {
     use HasUser;
-
-    public function model_sets() {
-        return $this->belongsToMany('App\Models\ModelSets');
-    }
 
     public function exams() {
         return $this->belongsToMany('App\Models\Exams');
     }
 
-    public function questions() {
-        return $this->belongsToMany('App\Models\Question');
+    public function subjects() {
+        return $this->belongsToMany('App\Models\Subject');
     }
 
-    public function chapters() {
-        return $this->belongsToMany('App\Models\Chapter');
+    public function questions() {
+        return $this->belongsToMany('App\Models\Question');
     }
 
     public function check_questions()

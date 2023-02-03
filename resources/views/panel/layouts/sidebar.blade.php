@@ -145,6 +145,10 @@
           $title == 'Create subject' ||
           $title == 'Update subject' ||
           $title == 'Store subject questions' ||
+          $title == 'chapters' ||
+          $title == 'Create chapter' ||
+          $title == 'Update chapter' ||
+          $title == 'Store chapter questions' ||
           $title == 'App Users' ||
           $title == 'Push Notification Section' ||
           $title == 'Create Push Notification Section' ||
@@ -183,6 +187,9 @@
                             $title == 'Create subject' ||
                             $title == 'Update subject' ||
                             $title == 'Store subject questions' ||
+                            $title == 'chapters' || $title == 'Create chapter' ||
+                            $title == 'Update chapter' ||
+                            $title == 'Store chapter questions' ||
                             $title == 'App Users' ||
                             $title == 'Push Notification Section' ||
                             $title == 'Create Push Notification Section' ||
@@ -268,7 +275,11 @@
                                 $title == 'subjects' ||
                                 $title == 'Create subject' ||
                                 $title == 'Update subject' ||
-                                $title == 'Store subject questions'
+                                $title == 'Store subject questions' ||
+                                $title == 'chapters' ||
+                                $title == 'Create chapter' ||
+                                $title == 'Update chapter' ||
+                                $title == 'Store chapter questions'
                                     ? 'menu-open'
                                     : '' }}">
                                 <a href="#"
@@ -290,7 +301,11 @@
                                     $title == 'subjects' ||
                                     $title == 'Create subject' ||
                                     $title == 'Update subject' ||
-                                    $title == 'Store subject questions'
+                                    $title == 'Store subject questions' ||
+                                    $title == 'chapters' ||
+                                    $title == 'Create chapter' ||
+                                    $title == 'Update chapter' ||
+                                    $title == 'Store chapter questions'
                                         ? 'active'
                                         : '' }}">
                                     <i class="nav-icon fas fa-box"></i>
@@ -327,6 +342,13 @@
                                             class="nav-link {{ $title == 'subjects' || $title == 'Create subject' || $title == 'Update subject' || $title == 'Store subject questions' ? 'active' : '' }}">
                                             <i class="fas fa-book nav-icon"></i>
                                             <p>Subjects</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('chapter-view') }}"
+                                            class="nav-link {{ $title == 'chapters' || $title == 'Create chapter' || $title == 'Update chapter' || $title == 'Store chapter questions' ? 'active' : '' }}">
+                                            <i class="fas fa-book nav-icon"></i>
+                                            <p>Chapters</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">

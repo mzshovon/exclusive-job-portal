@@ -13,14 +13,14 @@ class CreateQuestionChapterTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_chapter', function (Blueprint $table) {
-            $table->unsignedBigInteger('question_id');
+        Schema::create('chapter_question', function (Blueprint $table) {
             $table->unsignedBigInteger('chapter_id');
+            $table->unsignedBigInteger('question_id');
+            $table->foreign('chapter_id')->references("id")->on('chapters')
+            ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('question_id')->references("id")->on('questions')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('chapter_id')->references("id")->on('chapters')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->primary(['question_id', 'chapter_id']);
+            $table->primary(['chapter_id', 'question_id']);
         });
     }
 

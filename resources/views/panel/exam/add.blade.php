@@ -39,7 +39,7 @@
                                       <span class="input-group-text"><i class="far fa-calendar"></i></span>
                                     </div>
                                     <input type="text" class="form-control float-right" id="reservationtime" name="date_duration">
-                                  </div>                                  
+                                  </div>
                                 </div>
                                 <div class="col-md-6">
                                   <label>Duration:</label>
@@ -54,11 +54,11 @@
                               <!-- /.input group -->
                             </div>
                             <div class="form-group">
-                              <label>Assign Subjects (Optional)</label>
-                              <select class="form-control select2bs4" data-placeholder="Select Subjects" name="subject[]" style="width: 100%;">
-                                <option disabled selected>------Select Subject------</option>
-                                @forelse ($subjects as $subject)
-                                  <option value="{{$subject->id}}">{{$subject->title}}</option>
+                              <label>Assign Chapters (Optional)</label>
+                              <select class="form-control select2bs4" data-placeholder="Select chapters" name="subject[]" style="width: 100%;">
+                                <option disabled selected>------Select Chapter------</option>
+                                @forelse ($chapters as $chapter)
+                                  <option value="{{$chapter->id}}">{{$chapter->title}}</option>
                                 @empty
                                     No Data Found
                                 @endforelse

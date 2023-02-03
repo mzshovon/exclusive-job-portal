@@ -8,7 +8,7 @@
 @section('content')
 <section class="content-header">
     <div class="container-fluid">
-      <form role="form" action="{{route('subject-create')}}" method="post" enctype="multipart/form-data">
+      <form role="form" action="{{route('chapter-create')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
           <div class="col-md-12">
@@ -50,46 +50,27 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="	fa fa-user-plus"></i></span>
                             </div>
-                            <select class="form-control" id="status" name="status" style="width: 100%;">
+                            <select class="form-control select2" id="status" name="status" style="width: 100%;">
                                 <option selected="selected" disabled>-- Select Status --</option>
                                 <option value="1">Active</option>
                                 <option value="0">Deactive</option>
                               </select>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Color</label>
-                                <div class="input-group my-colorpicker2">
-                                    <input type="text" class="form-control" name="color">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-square"></i></span>
-                                    </div>
-                                </div>
+                        <div class="form-group">
+                          <label>Color</label>
+                          <div class="input-group my-colorpicker2">
+                            <input type="text" class="form-control" name="color">
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="fas fa-square"></i></span>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Assign Chapters <span class="text-danger">*</span></span></label>
-                                    <div class="select2-purple">
-                                        <select class="select2" data-dropdown-css-class="select2-purple" multiple="multiple" data-placeholder="Select Subjects" name="chapter[]" style="width: 100%;">
-                                            @forelse ($chapters as $chapter)
-                                            <option value="{{$chapter->id}}">{{$chapter->title}}</option>
-                                            @empty
-                                            No Data Found
-                                            @endforelse
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                          </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                     <div class="form-group">
                       <label>Description <span class="text-danger">*</span></label>
-                      <textarea class="textarea form-control" rows="3" name="description" placeholder="Describe about the subject ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                      <textarea class="textarea form-control" rows="3" name="description" placeholder="Describe about the chapter ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                     </div>
                     </div>
                 </div>
@@ -127,7 +108,6 @@
     $('.duallistbox').bootstrapDualListbox();
     $('.duallistboxroles').bootstrapDualListbox();
     $('[data-mask]').inputmask();
-    $('.select2').select2();
     $(function () {
     // Summernote
     $('.textarea').summernote();

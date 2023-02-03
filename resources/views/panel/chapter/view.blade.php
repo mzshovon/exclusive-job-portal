@@ -24,8 +24,8 @@
       <div class="card-header">
         <h3 class="card-title">{{$title}}</h3>
         <div class="card-tools">
-            <a href="{{route('subject-create')}}" class="btn btn-primary btn-sm">Add subject <i class="fa fa-plus"></i></a>
-            <a href="{{route('excel-subject-export')}}" class="btn btn-info btn-sm">Export Excel <i class="fa fa-file-excel"></i></a>
+            <a href="{{route('chapter-create')}}" class="btn btn-primary btn-sm">Add chapter <i class="fa fa-plus"></i></a>
+            {{-- <a href="{{route('excel-chapter-export')}}" class="btn btn-info btn-sm">Export Excel <i class="fa fa-file-excel"></i></a> --}}
           <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
             <i class="fas fa-minus"></i></button>
           <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
@@ -34,33 +34,7 @@
       </div>
       <div class="card-body">
         @include('panel.layouts.alert')
-        <div class="row">
-        @forelse ($subjects as $subject)
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="info-box bg-info">
-                <span class="info-box-icon"><img src="{{asset('public/dist/img/stack-of-books.png')}}"></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text">{!! $subject->title !!}</span>
-                    <span class="info-box-number">Chapters : {{ $subject->chapters()->count() }}</span>
-                    @if ($subject->chapters->count() > 0)
-                        <span class="translate-middle badge rounded-pill bg-primary">
-                            <a href="{{route('chapter-view',['subjectId'=>$subject->id])}}">Chapters</a>
-                        </span>
-                    @endif
-                    <span class="translate-middle badge rounded-pill bg-primary">
-                        <a href="{{route('subject-update',['id'=>$subject->id])}}">Edit</a>
-                    </span>
-                    <span class="progress-description">
-                    </span>
-                    </div>
-                </div>
-            </div>
-        @empty
-        </div>
-
-        @endforelse
-
-        {{-- <table id="dataTable" class="table table-bordered table-striped">
+        <table id="dataTable" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>
@@ -93,65 +67,72 @@
               @php
                   $i=1;
               @endphp
-                @forelse ($subjects as $subject)
-                <tr data-id={{$subject->id}}>
+                @forelse ($chapters as $chapter)
+                <tr data-id={{$chapter->id}}>
                     <td>
                         {{$i++}}
                     </td>
+                    {{-- <td>
+                        {{$chapter->title_en}}
+                    </td> --}}
                     <td>
-                        {!! $subject->title !!}
+                        {!! $chapter->title !!}
+                    </td>
+                    {{-- <td>
+                        {!! $chapter->description_en !!}
+                    </td> --}}
+                    <td>
+                        {!! $chapter->description !!}
                     </td>
                     <td>
-                        {!! $subject->description !!}
+                        <img src="{{asset($chapter->icon)}}" style="height: 40px; width: 40px">
                     </td>
                     <td>
-                        <img src="{{asset($subject->icon)}}" style="height: 40px; width: 40px">
+                      Questions: <span class="badge badge-info">{{$chapter->questions->count()}}</span>
                     </td>
                     <td>
-                      Questions: <span class="badge badge-info">{{$subject->questions->count()}}</span>
-                    </td>
-                    <td>
-                        @if ($subject->status == 1)
+                        @if ($chapter->status == 1)
                           <span class="badge badge-success badge-sm">Active</span>
                         @else
                           <span class="badge badge-danger badge-sm">InActive</span>
                         @endif
                     </td>
                     <td>
-                        {{$subject->created_at}}
+                        {{$chapter->created_at}}
                     </td>
                     <td>
-                        <a class="btn btn-info btn-sm" href="{{route('subject-update',['id'=>$subject->id])}}">
+                        <a class="btn btn-info btn-sm" href="{{route('chapter-update',['id'=>$chapter->id])}}">
                             <i class="fas fa-pencil-alt">
                             </i>
                             Edit
                         </a>
-                        @if ($subject->check_questions())
-                          <a class="btn btn-success btn-sm" href="{{route('subject-question-update',['subject_id'=>$subject->id])}}">
+                        @if ($chapter->check_questions())
+                          <a class="btn btn-success btn-sm" href="{{route('chapter-question-update',['chapter_id'=>$chapter->id])}}">
                             <i class="fa fa-eye">
                             </i>
                             View Questions
                           </a>
-                          <a class="btn btn-info btn-sm" href="{{route('excel-question-answer-export',['name'=>'subject','id'=>$subject->id])}}">
+                          <a class="btn btn-info btn-sm" href="{{route('excel-question-answer-export',['name'=>'chapter','id'=>$chapter->id])}}">
                             <i class="fa fa-file-excel">
                             </i>
                             Export Q&A
                           </a>
                         @else
-                          <a class="btn btn-info btn-sm" href="{{route('subject-question-create',['subject_id'=>$subject->id])}}">
+                          <a class="btn btn-info btn-sm" href="{{route('chapter-question-create',['chapter_id'=>$chapter->id])}}">
                             <i class="fa fa-server">
                             </i>
                             Questions
                           </a>
-                          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-default" data-id="{{$subject->id}}">
+                          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-default" data-id="{{$chapter->id}}">
                             Upload Excel <i class="fa fa-file-excel text-success"></i>
                           </button>
                         @endif
-                        <span class="action_btn-{{$subject->id}}">
-                          <button class="btn btn-{{$subject->status == 1 ? 'warning' : 'success'}} btn-sm" onclick ="changeStatus({{$subject->id}})" >
-                            <i class="fas fa-{{$subject->status == 1 ? 'ban' : 'check-square'}}">
+                        {{-- </a>href="{{route('role-delete',['id'=>$user->id])}}" --}}
+                        <span class="action_btn-{{$chapter->id}}">
+                          <button class="btn btn-{{$chapter->status == 1 ? 'warning' : 'success'}} btn-sm" onclick ="changeStatus({{$chapter->id}})" >
+                            <i class="fas fa-{{$chapter->status == 1 ? 'ban' : 'check-square'}}">
                             </i>
-                            {{$subject->status == 1 ? 'Deactivate' : 'Activate'}}
+                            {{$chapter->status == 1 ? 'Deactivate' : 'Activate'}}
                           </button>
                         </span>
                     </td>
@@ -162,7 +143,7 @@
                 </tr>
                 @endforelse
             </tbody>
-        </table> --}}
+        </table>
       </div>
     </div>
   </section>
@@ -179,7 +160,7 @@
         var button = $(event.relatedTarget)
         var recipient = button.data('id')
         var modal = $(this)
-        modal.find('form').attr('action',`{{url('subject/question_create_from_excel/subject/${recipient}')}}`);
+        modal.find('form').attr('action',`{{url('chapter/question_create_from_excel/chapter/${recipient}')}}`);
     });
   $(function () {
     $("#dataTable").DataTable({
@@ -200,14 +181,14 @@
     }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
-          url: "{{route('subject-status-change',['id'=>"+id+"])}}",
+          url: "{{route('chapter-status-change',['id'=>"+id+"])}}",
           method: "POST",
           data: {'id': id, _token: '{{csrf_token()}}', 'page': '{{app('request')->page}}'},
           dataType: "json",
           success: function (data,statusMessage,status) {
               console.log('test');
-              subject_status = data.subject_status == 1 ? 'deactivated': 'activated';
-              if (subject_status == 'deactivated') {
+              chapter_status = data.chapter_status == 1 ? 'deactivated': 'activated';
+              if (chapter_status == 'deactivated') {
                 $('tr[data-id='+id+'] td:nth-child(6)').html('<span class="badge badge-danger badge-sm">InActive</span>');
                 $('.action_btn-'+id).html(`<button class="btn btn-success btn-sm" onclick ="changeStatus(${id})">
                   <i class="fas fa-check-square"></i> Activate</button>`);
@@ -219,7 +200,7 @@
               if(status.status==200){
                 Swal.fire(
                   'Status Changed!',
-                  'Your selected subject has been '+subject_status+'.',
+                  'Your selected chapter has been '+chapter_status+'.',
                   'success'
                   )
               };

@@ -91,12 +91,12 @@ Route::group(['middleware'=>['auth']],function () {
         Route::post('/subject/status/change', 'Admin\SubjectController@change_status')->name('subject-status-change');
 
         // --------------- Chapter routes ---------------------- //
-        Route::get('/chapter/view', 'Admin\SubjectController@view')->name('chapter-view');
-        Route::any('/chapter/create', 'Admin\SubjectController@store')->name('chapter-create');
-        Route::any('/chapter/question_create/{subject_id}', 'Admin\SubjectController@subject_question_store')->name('chapter-question-create');
-        Route::any('/chapter/question_update/{subject_id}', 'Admin\SubjectController@subject_question_update')->name('chapter-question-update');
-        Route::any('/chapter/update/{id}', 'Admin\SubjectController@update')->name('chapter-update');
-        Route::post('/chapter/status/change', 'Admin\SubjectController@change_status')->name('chapter-status-change');
+        Route::get('/chapter/view', 'Admin\ChapterController@view')->name('chapter-view');
+        Route::any('/chapter/create', 'Admin\ChapterController@store')->name('chapter-create');
+        Route::any('/chapter/question_create/{chapter_id}', 'Admin\ChapterController@chapter_question_store')->name('chapter-question-create');
+        Route::any('/chapter/question_update/{chapter_id}', 'Admin\ChapterController@chapter_question_update')->name('chapter-question-update');
+        Route::any('/chapter/update/{id}', 'Admin\ChapterController@update')->name('chapter-update');
+        Route::post('/chapter/status/change', 'Admin\ChapterController@change_status')->name('chapter-status-change');
 
         // --------------- Exam routes ---------------------- //
         Route::get('/exam/view', 'Admin\ExamController@view')->name('exam-view');

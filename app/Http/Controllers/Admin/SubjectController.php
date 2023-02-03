@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
+use App\Models\Chapter;
 use App\Models\Question;
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -47,6 +48,9 @@ class SubjectController extends Controller
                 $subject->icon = $destination_path . $file_name;
             }
             if ($subject->save()) {
+                if($request->chapter) {
+                    $subject->chapters()->attach($request->chapter);
+                }
                 $message['alert'] = 'success';
                 $message['alert_message'] = 'subject created successfully!';
                 return redirect('subject/create')->with('message', $message);
@@ -58,6 +62,7 @@ class SubjectController extends Controller
         } elseif ($request->isMethod('get')) {
             $data = array();
             $data['title'] = 'Create subject';
+            $data['chapters'] = Chapter::get();
             return view('panel.subject.add', $data);
         }
     }
@@ -68,6 +73,7 @@ class SubjectController extends Controller
                 'status' => 'required|in:0,1',
                 'title' => 'required|max:255',
                 'color' => 'required',
+                'chapter.*' => 'required',
                 // 'icon'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:500'
             ]);
             $message = array();
@@ -88,6 +94,9 @@ class SubjectController extends Controller
                 $subject->icon = $destination_path . $file_name;
             }
             if ($subject->save()) {
+                if($request->chapter){
+                    $subject->chapters()->sync($request->chapter);
+                }
                 $message['alert'] = 'success';
                 $message['alert_message'] = 'subject updated successfully!';
                 return redirect()->back()->with('message', $message);
@@ -99,6 +108,11 @@ class SubjectController extends Controller
         } elseif ($request->isMethod('get')) {
             $data = array();
             $data['subject'] = Subject::find($id);
+            $data['chapters'] = Chapter::get();
+            $data['chapter_list'] = [];
+            foreach ($data['subject']->chapters as $key=>$value) {
+                array_push($data['chapter_list'] ,$value->id);
+            }
             $data['title'] = 'Update subject';
             return view('panel.subject.edit', $data);
         }

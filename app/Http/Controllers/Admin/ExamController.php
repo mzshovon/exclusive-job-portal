@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
+use App\Models\Chapter;
 use App\Models\Question;
 use App\Models\Exam;
 use App\Models\Subject;
@@ -68,7 +69,7 @@ class ExamController extends Controller
         } elseif ($request->isMethod('get')) {
             $data = array();
             $data['title'] = 'Create exam';
-            $data['subjects'] = Subject::get();
+            $data['chapters'] = Chapter::get();
             return view('panel.exam.add', $data);
         }
     }
@@ -120,7 +121,7 @@ class ExamController extends Controller
         } elseif ($request->isMethod('get')) {
             $data = array();
             $data['exam'] = Exam::find($id);
-            $data['subjects'] = Subject::all();
+            $data['chapters'] = Chapter::all();
             $data['title'] = 'Update exam';
             return view('panel.exam.edit', $data);
         }

@@ -59,7 +59,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="	fa fa-user-plus"></i></span>
                             </div>
-                            <select class="form-control select2" id="status" name="status" style="width: 100%;">
+                            <select class="form-control" id="status" name="status" style="width: 100%;">
                                 <option selected="selected" disabled>-- Select Status --</option>
                                 <option value="1" {{$subject->status == 1 ? 'selected':''}}>Active</option>
                                 <option value="0" {{$subject->status == 0 ? 'selected':''}}>Deactive</option>
@@ -68,12 +68,27 @@
                       </div>
                         <div class="form-group">
                           <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                               <label>Color</label>
                               <div class="input-group my-colorpicker2">
                                 <input type="text" class="form-control" name="color" value="{{$subject->color}}">
                                 <div class="input-group-append">
                                   <span class="input-group-text"><i class="fas fa-square"></i></span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>Assign Chapters <span class="text-danger">*</span></span></label>
+                                  <div class="select2-purple">
+                                  <select class="select2" data-dropdown-css-class="select2-purple" multiple="multiple" data-placeholder="Select chapters" name="chapter[]" style="width: 100%;">
+                                    {{-- {{in_array($model->id, $subject_list) ? 'selected':''}} --}}
+                                    @forelse ($chapters as $chapter)
+                                      <option value="{{$chapter->id}}" {{in_array($chapter->id, $chapter_list) ? 'selected':''}}>{{$chapter->title}}</option>
+                                    @empty
+                                        No Data Found
+                                    @endforelse
+                                  </select>
                                 </div>
                               </div>
                             </div>
@@ -123,6 +138,7 @@
     $(document).ready(function () {
       bsCustomFileInput.init();
     });
+    $('.select2').select2();
     $('.duallistbox').bootstrapDualListbox();
     $('.duallistboxroles').bootstrapDualListbox();
     $('[data-mask]').inputmask();
