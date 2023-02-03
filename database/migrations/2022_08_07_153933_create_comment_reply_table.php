@@ -16,6 +16,7 @@ class CreateCommentReplyTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('comment')->nullable(false);
+            $table->integer('seen')->default(0);
             $table->string('other')->nullable();
             $table->foreignId("created_by")->constrained("users")->onDelete("cascade");
             $table->foreignId("updated_by")->constrained("users")->onDelete("cascade");

@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// })->name('login');
 
 Route::post('/logout', 'LoginController@logout')->name('logout');
-Route::get('/admin/login', function () {
-    return view('welcome');
-});
+// Route::get('/admin/login', function () {
+//     return view('auth.login');
+// })->name('admin-manual-login');
 
 Auth::routes();
 Route::group(['middleware'=>['auth']],function () {
@@ -89,6 +89,14 @@ Route::group(['middleware'=>['auth']],function () {
         Route::any('/subject/question_update/{subject_id}', 'Admin\SubjectController@subject_question_update')->name('subject-question-update');
         Route::any('/subject/update/{id}', 'Admin\SubjectController@update')->name('subject-update');
         Route::post('/subject/status/change', 'Admin\SubjectController@change_status')->name('subject-status-change');
+
+        // --------------- Chapter routes ---------------------- //
+        Route::get('/chapter/view', 'Admin\SubjectController@view')->name('chapter-view');
+        Route::any('/chapter/create', 'Admin\SubjectController@store')->name('chapter-create');
+        Route::any('/chapter/question_create/{subject_id}', 'Admin\SubjectController@subject_question_store')->name('chapter-question-create');
+        Route::any('/chapter/question_update/{subject_id}', 'Admin\SubjectController@subject_question_update')->name('chapter-question-update');
+        Route::any('/chapter/update/{id}', 'Admin\SubjectController@update')->name('chapter-update');
+        Route::post('/chapter/status/change', 'Admin\SubjectController@change_status')->name('chapter-status-change');
 
         // --------------- Exam routes ---------------------- //
         Route::get('/exam/view', 'Admin\ExamController@view')->name('exam-view');

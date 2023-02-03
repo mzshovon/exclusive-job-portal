@@ -75,7 +75,7 @@ class CreateAppSetupTables extends Migration
         // Create table for storing for subjects
         Schema::create('subjects', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title')->unique();
+            $table->string('title');
             $table->string('icon')->nullable();
             $table->string('color')->default("#FFF");
             $table->string('description')->nullable();
@@ -83,7 +83,7 @@ class CreateAppSetupTables extends Migration
             $table->foreignId("updated_by")->constrained("users")->onDelete("cascade");
             $table->timestamps();
         });
-        
+
         // Create table for associating subjects to models (Many-to-Many)
         Schema::create('model_subjects', function (Blueprint $table) {
             $table->unsignedBigInteger('model_id');
@@ -93,6 +93,29 @@ class CreateAppSetupTables extends Migration
             $table->foreign('model_id')->references("id")->on('models')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->primary(['subject_id', 'model_id']);
+        });
+
+         // Create table for storing for subjects
+         Schema::create('chapters', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title')->unique();
+            $table->string('icon')->nullable();
+            $table->string('color')->default("#FFF");
+            $table->string('description')->nullable();
+            $table->integer('status')->default(1);
+            $table->foreignId("created_by")->constrained("users")->onDelete("cascade");
+            $table->foreignId("updated_by")->constrained("users")->onDelete("cascade");
+            $table->timestamps();
+        });
+
+        Schema::create('chapter_subject', function (Blueprint $table) {
+            $table->unsignedBigInteger('chapter_id');
+            $table->unsignedBigInteger('subject_id');
+            $table->foreign('chapter_id')->references("id")->on('chapters')
+            ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('subject_id')->references("id")->on('subjects')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->primary(['chapter_id', 'subject_id']);
         });
 
     }

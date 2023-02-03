@@ -14,7 +14,7 @@ class AlterModelSubjectAndModelQuestionTable extends Migration
     public function up()
     {
         Schema::rename('model_subjects','subject_model');
-        Schema::rename('model_questions','question_model');
+        // Schema::rename('model_questions','question_model');
     }
 
     /**
