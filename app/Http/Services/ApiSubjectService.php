@@ -2,11 +2,12 @@
 
 namespace App\Http\Services;
 
+use App\Models\Chapter;
 use App\Models\Subject;
 
 class ApiSubjectService {
 
-    public function __construct(private Subject $subject){}
+    public function __construct(private Subject $subject, private Chapter $chapter){}
 
     public function getSubjectsInfo()
     {
@@ -16,6 +17,16 @@ class ApiSubjectService {
     public function getQuestionsWithOptionsInfo($subjectId)
     {
         return $this->subject::getAllQuestionsWithOptionsById($subjectId);
+    }
+
+    public function getChapterQuestionsWithOptionsInfo($subjectId)
+    {
+        return $this->chapter::getAllQuestionsWithOptionsById($subjectId);
+    }
+
+    public function getChapterInfo($subjectId)
+    {
+        return $this->subject::getAllChaptersBySubjectId($subjectId);
     }
 
     public function getScoreInfo($request)

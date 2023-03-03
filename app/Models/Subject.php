@@ -73,6 +73,23 @@ class Subject extends Model
         }
     }
 
+    public static function getAllChaptersBySubjectId($subjectId)
+    {
+        $subject = self::with('chapters')->find($subjectId);
+
+        if($subject) {
+            return collect($subject->chapters)->map(function($chapter){
+                return [
+                    "title" => $chapter->title,
+                    "icon" => $chapter->icon,
+                    "color_code" => $chapter->color_code,
+                    "description" => $chapter->description,
+                    "status" => $chapter->status,
+                ];
+            });
+        }
+    }
+
     private static function getAllOptionsWithAnswerByQuestionId($question, $is_answer = false)
     {
         $collected_answer_array = collect($question->answers);

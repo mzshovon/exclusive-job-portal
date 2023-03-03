@@ -15,10 +15,10 @@ class CreateFaqsTable extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->string("title_en",255)->comment("Title in English");
-            $table->string("title_bn",255)->comment("Title in Bengali");
-            $table->text("description_en")->comment("Description in English");
-            $table->text("description_bn")->comment("Description in Bengali");
+            $table->string("title_en",255)->comment("Title in English")->nullable();
+            $table->string("title_bn",255)->comment("Title in Bengali")->nullable();
+            $table->text("description_en")->comment("Description in English")->nullable();
+            $table->text("description_bn")->comment("Description in Bengali")->nullable();
             $table->smallInteger("is_active")->default(0)->comment("If 1 will show the faq section");
             $table->foreignId("created_by")->constrained("users")->onDelete("cascade");
             $table->foreignId("updated_by")->constrained("users")->onDelete("cascade");

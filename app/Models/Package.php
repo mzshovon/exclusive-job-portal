@@ -17,6 +17,9 @@ class Package extends Model
         return $this->belongsToMany('App\Models\Section');
     }
 
+    /**
+     * @return array
+     */
     public static function getAllActivePackages()
     {
         return self::whereStatus(1)->get(['id', 'title', 'icon', 'color as color_code',
@@ -24,6 +27,11 @@ class Package extends Model
                                             'status', 'duration']);
     }
 
+    /**
+     * @param int|string $packageId
+     *
+     * @return array
+     */
     public static function getAllCoursesByPackageId($packageId)
     {
         $course_array = [];
@@ -42,5 +50,31 @@ class Package extends Model
         }
 
         return $course_array;
+    }
+
+    /**
+     * @param int|string $packageId
+     *
+     * @return array
+     */
+    public static function getAllSectionsByPackageId($packageId)
+    {
+        $section_array = [];
+        $sections = self::with('sections')->find($packageId);
+
+        if($sections) {
+            foreach($sections->sections as $section) {
+                $section_array[] = [
+                        "title" => $section->title,
+                        "icon" => $section->icon,
+                        "color_code" => $section->color,
+                        "position" => $section->position,
+                        "description" => $section->description,
+                        "status" => $section->status
+                    ];
+            }
+        }
+
+        return $section_array;
     }
 }

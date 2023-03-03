@@ -78,13 +78,13 @@
                         {{$about->title_en}}
                     </td> --}}
                     <td>
-                        {!! $about->title_bn !!}
+                        {!! $about->title_en !!}
                     </td>
                     {{-- <td>
                         {!! $about->description_en !!}
                     </td> --}}
                     <td>
-                        {!! $about->description_bn !!}
+                        {!! $about->description_en !!}
                     </td>
                     <td>
                         <img src="{{asset($about->image_path)}}" class="gallery_image_boxed">
@@ -130,7 +130,7 @@
                             Delete
                         </button>
                     </td>
-                </tr> 
+                </tr>
                 @empty
                 <tr class="text-center">
                     No Data available!
@@ -153,7 +153,7 @@
     $("#dataTable").DataTable({
       "responsive": true,
       "autoWidth": false,
-     
+
     });
   });
   function deleteRole(id) {

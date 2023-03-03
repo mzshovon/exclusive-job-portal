@@ -49,12 +49,12 @@ class Chapter extends Model
         }
     }
 
-    public static function getAllQuestionsWithOptionsById($subjectId, $options = true, $answers_only = false)
+    public static function getAllQuestionsWithOptionsById($chapterId, $options = true, $answers_only = false)
     {
-        $subject = self::with('questions')->find($subjectId);
+        $chapter = self::with('questions')->find($chapterId);
 
-        if($subject) {
-            return collect($subject->questions)->map(function($question) use ($options,$answers_only){
+        if($chapter) {
+            return collect($chapter->questions)->map(function($question) use ($options,$answers_only){
                 return !$answers_only ?
                     ($options ? [
                         "id" => $question->id,

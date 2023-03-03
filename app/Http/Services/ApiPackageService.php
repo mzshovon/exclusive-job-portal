@@ -17,6 +17,11 @@ class ApiPackageService {
         return Package::getAllCoursesByPackageId($packageId);
     }
 
+    public function getSectionsInfo($packageId)
+    {
+        return Package::getAllSectionsByPackageId($packageId);
+    }
+
     public function getSubjectsByCourseIdInfo($courseId)
     {
         return ModelSets::getAllSubjectsByCourseId($courseId);

@@ -26,7 +26,7 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text"><i class="fa fa-address-card"></i></span>
                                     </div>
-                                    <input type="text" id="title_bn" name="title_bn" class="form-control">
+                                    <input type="text" id="title_en" name="title_en" class="form-control">
                                 </div>
                           </div>
                           <div class="form-group">
@@ -88,7 +88,7 @@
                     <div class="col-md-12">
                     <div class="form-group">
                       <label>Description <span class="text-danger">*</span></label>
-                      <textarea class="textarea form-control" rows="3" name="description_bn" placeholder="Describe about the section ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                      <textarea class="textarea form-control" rows="3" name="description_en" placeholder="Describe about the section ..." style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                     </div>
                     </div>
                 </div>

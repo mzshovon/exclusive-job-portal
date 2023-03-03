@@ -1,0 +1,561 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Exclusive Job Portal API Documentation",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/exams/": {
+            "get": {
+                "tags": [
+                    "Exam"
+                ],
+                "summary": "Get exams details",
+                "description": "Returns exam information",
+                "operationId": "a5774d58a3f849c00d5fe3b9284ef659",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/exams/questions/{examId}": {
+            "get": {
+                "tags": [
+                    "Exam"
+                ],
+                "summary": "Get exams details",
+                "description": "Returns exam's questions information",
+                "operationId": "44cb84845f245f66ae03fadea3930373",
+                "parameters": [
+                    {
+                        "name": "examId",
+                        "in": "path",
+                        "description": "Exam unique ID",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/exams/questions-answers/score": {
+            "post": {
+                "tags": [
+                    "Exam"
+                ],
+                "summary": "Store exam score",
+                "description": "Returns score number",
+                "operationId": "7a3385a262543bde465c87f07857ae2e",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "parentId",
+                                    "questions[]",
+                                    "answers[]"
+                                ],
+                                "properties": {
+                                    "parentId": {
+                                        "type": "integer"
+                                    },
+                                    "questions[]": {
+                                        "description": "Questions ID",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "int",
+                                            "format": "id"
+                                        },
+                                        "collectionFormat": "multi"
+                                    },
+                                    "answers[]": {
+                                        "description": "Answers ID",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "int",
+                                            "format": "id"
+                                        },
+                                        "collectionFormat": "multi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Successful"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/packages/": {
+            "get": {
+                "tags": [
+                    "Package"
+                ],
+                "summary": "Get package details",
+                "description": "Returns package information",
+                "operationId": "bc7fc82a6159321d499f8a13a4ed144b",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/packages/courses/{packageId}": {
+            "get": {
+                "tags": [
+                    "Package"
+                ],
+                "summary": "Get packages course details",
+                "description": "Returns packages's courses information",
+                "operationId": "c35910c6bedee5d623f2f77be290a892",
+                "parameters": [
+                    {
+                        "name": "packageId",
+                        "in": "path",
+                        "description": "Package unique ID",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/packages/sections/{packageId}": {
+            "get": {
+                "tags": [
+                    "Package"
+                ],
+                "summary": "Get packages section details",
+                "description": "Returns packages's sections information",
+                "operationId": "335bae975c0755598ce4f0b9ef44f283",
+                "parameters": [
+                    {
+                        "name": "packageId",
+                        "in": "path",
+                        "description": "Package unique ID",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subjects/": {
+            "get": {
+                "tags": [
+                    "Subject"
+                ],
+                "summary": "Get subject details",
+                "description": "Returns subject information",
+                "operationId": "3bad08ee7681819d8ad4d5652c7d0793",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subjects/questions/{subjectId}": {
+            "get": {
+                "tags": [
+                    "Subject"
+                ],
+                "summary": "Get subjects details",
+                "description": "Returns subjects's questions information",
+                "operationId": "1fb663db87a332f8da1d768be5b7dc5c",
+                "parameters": [
+                    {
+                        "name": "subjectId",
+                        "in": "path",
+                        "description": "Subject unique ID",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subjects/chapters/{subjectId}": {
+            "get": {
+                "tags": [
+                    "Subject"
+                ],
+                "summary": "Get chapters details",
+                "description": "Returns chapter's questions information",
+                "operationId": "b01edbc6c9be18840345512640d6eeae",
+                "parameters": [
+                    {
+                        "name": "subjectId",
+                        "in": "path",
+                        "description": "Subject unique ID",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subjects/chapters/questions/{chapterId}": {
+            "get": {
+                "tags": [
+                    "Subject"
+                ],
+                "summary": "Get chapters questions details",
+                "description": "Returns chapter's questions information",
+                "operationId": "24ce346035af9ccef3e3487a77ed60a1",
+                "parameters": [
+                    {
+                        "name": "chapterId",
+                        "in": "path",
+                        "description": "Chapter unique ID",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subjects/questions-answers/score": {
+            "post": {
+                "tags": [
+                    "Subject"
+                ],
+                "summary": "Store subject score",
+                "description": "Returns score number",
+                "operationId": "da1c3d589fba8943d8331efd8b20d4f7",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "parentId",
+                                    "questions[]",
+                                    "answers[]"
+                                ],
+                                "properties": {
+                                    "parentId": {
+                                        "type": "integer"
+                                    },
+                                    "questions[]": {
+                                        "description": "Questions ID",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "int",
+                                            "format": "id"
+                                        },
+                                        "collectionFormat": "multi"
+                                    },
+                                    "answers[]": {
+                                        "description": "Answers ID",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "int",
+                                            "format": "id"
+                                        },
+                                        "collectionFormat": "multi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Successful"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/faqs/": {
+            "get": {
+                "tags": [
+                    "Utility"
+                ],
+                "summary": "Get faqs details",
+                "description": "Returns faq information",
+                "operationId": "effe94b6c7c41adc3fbc1d4d0a646162",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/abouts/": {
+            "get": {
+                "tags": [
+                    "Utility"
+                ],
+                "summary": "Get abouts details",
+                "description": "Returns about information",
+                "operationId": "e6259e74a21c194a1c39da71424f1e61",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/videos/": {
+            "get": {
+                "tags": [
+                    "Utility"
+                ],
+                "summary": "Get videos details",
+                "description": "Returns video information",
+                "operationId": "d0b9064c397567082993180251e79562",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    }
+}

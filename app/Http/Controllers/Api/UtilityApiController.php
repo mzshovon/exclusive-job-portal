@@ -16,6 +16,31 @@ class UtilityApiController extends Controller
 
     public function __construct(private ApiUtilityService $apiUtilityService){}
 
+    /**
+     * @OA\Get(
+     *      path="/api/faqs/",
+     *      summary="Get faqs details",
+     *      security={ {"bearerAuth": {} }},
+     *      tags={"Utility"},
+     *      description="Returns faq information",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Server Error"
+     *      )
+     *     )
+     */
     public function getFaqs() : JsonResponse
     {
         try{
@@ -28,6 +53,31 @@ class UtilityApiController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/abouts/",
+     *      summary="Get abouts details",
+     *      security={ {"bearerAuth": {} }},
+     *      tags={"Utility"},
+     *      description="Returns about information",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Server Error"
+     *      )
+     *     )
+     */
     public function getAbouts(Request $request) : JsonResponse
     {
         try{
@@ -41,6 +91,31 @@ class UtilityApiController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/videos/",
+     *      summary="Get videos details",
+     *      security={ {"bearerAuth": {} }},
+     *      tags={"Utility"},
+     *      description="Returns video information",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Server Error"
+     *      )
+     *     )
+     */
     public function getVideos(Request $request) : JsonResponse
     {
         try{

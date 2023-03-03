@@ -7,18 +7,21 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
+use Laravel\Sanctum\HasApiTokens;
+
 class User extends Authenticatable
 {
     use Notifiable;
     use LaratrustUserTrait;
-        /**
+    use HasApiTokens, Notifiable;
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    // protected $fillable = [
+    //     'name', 'email', 'password',
+    // ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -37,19 +40,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function userimages() {
-        return $this->hasOne('App\Models\UserImage','user_id','id');
+    public function userimages()
+    {
+        return $this->hasOne('App\Models\UserImage', 'user_id', 'id');
     }
 
-    public function profile() {
-        return $this->hasOne('App\Models\UserProfile','user_id','id');
+    public function profile()
+    {
+        return $this->hasOne('App\Models\UserProfile', 'user_id', 'id');
     }
 
-    public function messages() {
+    public function messages()
+    {
         return $this->belongsToMany('App\Models\Message');
     }
 
-    public function push_notifcations() {
+    public function push_notifcations()
+    {
         return $this->belongsToMany('App\Models\PushNotification');
     }
 }

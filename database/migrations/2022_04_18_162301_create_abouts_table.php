@@ -16,9 +16,9 @@ class CreateAboutsTable extends Migration
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
             $table->string("title_en",400)->comment("Title in English");
-            $table->string("title_bn",400)->comment("Title in Bengali")->nullable()->change();
+            $table->string("title_bn",400)->comment("Title in Bengali")->nullable();
             $table->longText("description_en")->comment("Description in English");
-            $table->longText("description_bn")->comment("Description in Bengali")->nullable()->change();
+            $table->longText("description_bn")->comment("Description in Bengali")->nullable();
             $table->smallInteger("is_active")->default(0)->comment("If 1 will show the about us section");
             $table->smallInteger("type")->nullable(false)->comment("1= About us, 2= About Exams, 3= About Rules");
             $table->string("image_path",255)->nullable(false)->comment("Store the base path of images");
